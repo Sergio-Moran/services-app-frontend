@@ -96,17 +96,14 @@ const Register = () => {
   return (
     <>
       <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-      }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
       >
-        <Card
-          title="Register"
-          style={{ width: "25rem", marginBottom: "2em" }}
-        >
+        <Card title="Register" style={{ width: "25rem", marginBottom: "2em" }}>
           <div className="form-demo">
             <Dialog
               visible={showMessage}

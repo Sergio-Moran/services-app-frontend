@@ -11,9 +11,9 @@ import { Divider } from "primereact/divider";
 import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import "../public/css/Form.module.css";
+import Link from "next/link";
 
 const Login = () => {
-  const [countries, setCountries] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
   const [formData, setFormData] = useState({});
 
@@ -22,8 +22,6 @@ const Login = () => {
       name: "",
       email: "",
       password: "",
-      date: null,
-      country: null,
       accept: false,
     },
     validate: (data) => {
@@ -79,34 +77,18 @@ const Login = () => {
       />
     </div>
   );
-  const passwordHeader = <h6>Pick a password</h6>;
-  const passwordFooter = (
-    <React.Fragment>
-      <Divider />
-      <p className="mt-2">Suggestions</p>
-      <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: "1.5" }}>
-        <li>At least one lowercase</li>
-        <li>At least one uppercase</li>
-        <li>At least one numeric</li>
-        <li>Minimum 8 characters</li>
-      </ul>
-    </React.Fragment>
-  );
 
   return (
     <>
       <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-      }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
       >
-        <Card
-          title="Register"
-          style={{ width: "25rem", marginBottom: "2em" }}
-        >
+        <Card title="Login" style={{ width: "25rem", marginBottom: "2em" }}>
           <div className="form-demo">
             <Dialog
               visible={showMessage}
@@ -122,7 +104,6 @@ const Login = () => {
                   className="pi pi-check-circle"
                   style={{ fontSize: "5rem", color: "var(--green-500)" }}
                 ></i>
-                <h5>Registration Successful!</h5>
                 <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
                   Your account is registered under name <b>{formData.name}</b>{" "}
                   ;be valid next 30 days without activation. Please check{" "}
@@ -130,37 +111,11 @@ const Login = () => {
                 </p>
               </div>
             </Dialog>
-
             <div className="flex justify-content-center">
               <div className="card">
-                <h5 className="text-center">Register</h5>
                 <form onSubmit={formik.handleSubmit} className="p-fluid">
                   <div className="field">
-                    <span className="p-float-label">
-                      <InputText
-                        id="name"
-                        name="name"
-                        value={formik.values.name}
-                        onChange={formik.handleChange}
-                        autoFocus
-                        className={classNames({
-                          "p-invalid": isFormFieldValid("name"),
-                        })}
-                      />
-                      <label
-                        htmlFor="name"
-                        className={classNames({
-                          "p-error": isFormFieldValid("name"),
-                        })}
-                      >
-                        Name*
-                      </label>
-                    </span>
-                    {getFormErrorMessage("name")}
-                    <br></br>
-                    <br></br>
-                  </div>
-                  <div className="field">
+                    <h5 className="text-center">Login</h5>
                     <span className="p-float-label p-input-icon-right">
                       <i className="pi pi-envelope" />
                       <InputText
@@ -188,6 +143,7 @@ const Login = () => {
                   <div className="field">
                     <span className="p-float-label">
                       <Password
+                        feedback={false}
                         id="password"
                         name="password"
                         value={formik.values.password}
@@ -196,8 +152,6 @@ const Login = () => {
                         className={classNames({
                           "p-invalid": isFormFieldValid("password"),
                         })}
-                        header={passwordHeader}
-                        footer={passwordFooter}
                       />
                       <label
                         htmlFor="password"
@@ -209,46 +163,9 @@ const Login = () => {
                       </label>
                     </span>
                     {getFormErrorMessage("password")}
-                    <br></br>
-                    <br></br>
-                  </div>
-                  <div className="field">
-                    <span className="p-float-label">
-                      <Calendar
-                        id="date"
-                        name="date"
-                        value={formik.values.date}
-                        onChange={formik.handleChange}
-                        dateFormat="dd/mm/yy"
-                        mask="99/99/9999"
-                        showIcon
-                      />
-                      <label htmlFor="date">Birthday</label>
-                    </span>
                   </div>
                   <br></br>
-                  <br></br>
-                  <div className="field-checkbox">
-                    <Checkbox
-                      inputId="accept"
-                      name="accept"
-                      checked={formik.values.accept}
-                      onChange={formik.handleChange}
-                      className={classNames({
-                        "p-invalid": isFormFieldValid("accept"),
-                      })}
-                    />
-                    <label
-                      htmlFor="accept"
-                      className={classNames({
-                        "p-error": isFormFieldValid("accept"),
-                      })}
-                    >
-                      I agree to the terms and conditions*
-                    </label>
-                  </div>
-                  <br></br>
-
+                  {/*<Link href="/LogPage"></Link> */}
                   <Button type="submit" label="Submit" className="mt-2" />
                 </form>
               </div>
