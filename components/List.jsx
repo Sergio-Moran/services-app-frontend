@@ -23,14 +23,14 @@ const List = () => {
     { label: "Paris", value: "PRS" },
   ];
 
-  const render = () =>{
+  const render = () => {
     console.log(user);
     console.log(service);
-  }
+  };
 
   return (
     <div
-    style={{
+      style={{
         height: "100vh",
       }}
     >
@@ -52,6 +52,7 @@ const List = () => {
             value={user}
             options={userList}
             onChange={(e) => setUser(e.value)}
+            listStyle={{ maxHeight: "250px" }}
           />
         </Card>
         <Card
@@ -64,6 +65,7 @@ const List = () => {
             value={service}
             options={serviceList}
             onChange={(e) => setService(e.value)}
+            listStyle={{ maxHeight: "250px" }}
           />
         </Card>
       </div>
