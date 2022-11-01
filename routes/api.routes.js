@@ -18,5 +18,5 @@ export const validateUser = async (userCredentials) => {
     },
     body: JSON.stringify(userCredentials),
   });
-  return await response.json();
+  return await response;
 };

@@ -58,9 +58,10 @@ const Login = () => {
     const user = { mail: formik.values.mail, password: formik.values.password };
     const result = await validateUser(user);
     let returnUrl = "";
-    if (result.status) {
+    if (result.status == 200) {
       returnUrl = "/LogPage";
     } else {
+      formik.resetForm();
       returnUrl = "/";
     }
     router.push(returnUrl);
