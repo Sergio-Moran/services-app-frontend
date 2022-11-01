@@ -6,23 +6,12 @@ import "../public/css/Table.module.css";
 import { getUsers } from "../routes/api.routes";
 
 const Table = () => {
-  const [products, setProducts] = useState([]);
-
-  const formatCurrency = (value) => {
-    return value.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-  };
-
-  const priceBodyTemplate = (rowData) => {
-    return formatCurrency(rowData.price);
-  };
+  const [info, setInfo] = useState([]);
 
   const getUser = useCallback(async () => {
     const response = await getUsers();
     console.log(response);
-    /* setProducts(response); */
+    setInfo(response);
   }, []);
 
   useEffect(() => {
@@ -47,18 +36,10 @@ const Table = () => {
   return (
     <div className="datatable-templating-demo">
       <div className="card">
-        <DataTable
-          value={products}
-          header={header}
-          responsiveLayout="scroll"
-        >
+        <DataTable value={info} header={header} responsiveLayout="scroll">
+          <Column field="id" header="Cod."></Column>
           <Column field="name" header="Name"></Column>
-          <Column
-            field="email"
-            header="Email"
-            body={priceBodyTemplate}
-          ></Column>
-          <Column field="status" header="Status"></Column>
+          <Column field="mail" header="Email"></Column>
         </DataTable>
       </div>
     </div>
