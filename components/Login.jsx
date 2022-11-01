@@ -54,22 +54,16 @@ const Login = () => {
     );
   };
 
-  const a = () => {
-    let as = 0;
-    console.log("sub");
-    let returnUrl = "/";
-    if (as == 1) {
+  const user = async () => {
+    const user = { mail: formik.values.mail, password: formik.values.password };
+    const result = await validateUser(user);
+    let returnUrl = "";
+    if (result.status) {
       returnUrl = "/LogPage";
     } else {
-      console.log("no");
+      returnUrl = "/";
     }
     router.push(returnUrl);
-  };
-
-  const user = async () => {
-    const user = {mail: formik.values.mail, password: formik.values.password};
-    const result = await validateUser(user);
-    console.log(result);
   };
 
   const dialogFooter = (
@@ -103,8 +97,7 @@ const Login = () => {
               showHeader={false}
               breakpoints={{ "960px": "80vw" }}
               style={{ width: "30vw" }}
-            >
-            </Dialog>
+            ></Dialog>
             <div className="flex justify-content-center">
               <div className="card">
                 <form onSubmit={formik.handleSubmit} className="p-fluid">
