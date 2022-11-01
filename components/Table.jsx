@@ -8,11 +8,11 @@ import { getUsers } from "../routes/api.routes";
 const Table = () => {
   const [info, setInfo] = useState([]);
 
-  const getUser = useCallback(async () => {
+  const getUser = async () => {
     const response = await getUsers();
     console.log(response);
     setInfo(response);
-  }, []);
+  };
 
   useEffect(() => {
     getUser();
