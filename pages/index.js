@@ -3,9 +3,10 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Login from "../components/Login";
 import Table from "../components/Table";
+import List from "../components/List";
 
 export default function Home() {
   return (
-    <Table />
+    <List />
   )
 }

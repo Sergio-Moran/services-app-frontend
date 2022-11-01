@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import { Rating } from "primereact/rating";
 import "../public/css/Table.module.css";
 import { getUsers } from "../routes/api.routes";
 
@@ -18,20 +17,6 @@ const Table = () => {
 
   const priceBodyTemplate = (rowData) => {
     return formatCurrency(rowData.price);
-  };
-
-  const ratingBodyTemplate = (rowData) => {
-    return <Rating value={rowData.rating} readOnly cancel={false} />;
-  };
-
-  const statusBodyTemplate = (rowData) => {
-    return (
-      <span
-        className={`product-badge status-${rowData.inventoryStatus.toLowerCase()}`}
-      >
-        {rowData.inventoryStatus}
-      </span>
-    );
   };
 
   const getUser = useCallback(async () => {
