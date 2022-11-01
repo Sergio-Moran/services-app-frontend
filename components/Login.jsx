@@ -10,6 +10,7 @@ import "../public/css/Form.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { validateUser } from "../routes/api.routes";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const router = useRouter();
@@ -54,12 +55,17 @@ const Login = () => {
     );
   };
 
+  const [cookies, setCookie] = useCookies(["accessToken"]);
+
   const user = async () => {
     const user = { mail: formik.values.mail, password: formik.values.password };
     const result = await validateUser(user);
     let returnUrl = "";
-    if (result.status == 200) {
-      returnUrl = "/table";
+    console.log(result);
+    if (result.status) {
+      const accessToken = result.access_token;
+      setCookie("accessToken", accessToken, { path: "/" });
+      returnUrl = "/LogPage";
     } else {
       formik.resetForm();
       returnUrl = "/";
