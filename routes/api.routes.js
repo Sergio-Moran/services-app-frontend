@@ -1,5 +1,5 @@
-/* const ROUTE = "https://services-app-backend.vercel.app"; */
-const ROUTE = "http://localhost:3002";
+const ROUTE = "https://services-app-backend.vercel.app";
+/* const ROUTE = "http://localhost:3002"; */
 
 export const getUsers = async () => {
   const response = await fetch(`${ROUTE}/getUsers`, {
