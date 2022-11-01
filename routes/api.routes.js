@@ -1,4 +1,4 @@
-const ROUTE = "https://services-app-backend.vercel.app/";
+const ROUTE = "https://services-app-backend.vercel.app";
 
 export const getUsers = async () => {
   const response = await fetch(`${ROUTE}/getUsers`, {
