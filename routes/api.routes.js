@@ -8,6 +8,7 @@ export const getUsers = async () => {
 };
 
 export const validateUser = async (userCredentials) => {
+  console.log(userCredentials)
   const response = await fetch(`${ROUTE}/validateUser`, {
     method: "POST",
     mode: "cors",
