@@ -11,7 +11,6 @@ const FormPayServices = () => {
         height: "100vh",
       }}
     >
-      <Card>
         <h5>Addons</h5>
         <div className="grid p-fluid">
           <div className="col-12 md:col-4">
@@ -38,7 +37,6 @@ const FormPayServices = () => {
             </div>
           </div>
         </div>
-      </Card>
     </div>
   );
 };
