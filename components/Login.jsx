@@ -12,8 +12,10 @@ import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import "../public/css/Form.module.css";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
   const [showMessage, setShowMessage] = useState(false);
   const [formData, setFormData] = useState({});
 
@@ -52,7 +54,6 @@ const Login = () => {
     onSubmit: (data) => {
       setFormData(data);
       setShowMessage(true);
-
       formik.resetForm();
     },
   });
@@ -65,6 +66,18 @@ const Login = () => {
         <small className="p-error">{formik.errors[name]}</small>
       )
     );
+  };
+
+  const a = () => {
+    let as = 0;
+    console.log("sub");
+    let returnUrl = '/';
+    if (as == 1) {
+      returnUrl = "/LogPage";
+    } else {
+      console.log('no')
+    }
+    router.push(returnUrl);
   };
 
   const dialogFooter = (
@@ -166,7 +179,12 @@ const Login = () => {
                   </div>
                   <br></br>
                   {/*<Link href="/LogPage"></Link> */}
-                  <Button type="submit" label="Submit" className="mt-2" />
+                  <Button
+                    type="submit"
+                    onClick={a}
+                    label="Submit"
+                    className="mt-2"
+                  />
                 </form>
               </div>
             </div>
