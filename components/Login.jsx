@@ -59,7 +59,7 @@ const Login = () => {
     const result = await validateUser(user);
     let returnUrl = "";
     if (result.status == 200) {
-      returnUrl = "/LogPage";
+      returnUrl = "/table";
     } else {
       formik.resetForm();
       returnUrl = "/";
