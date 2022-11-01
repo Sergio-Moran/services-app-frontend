@@ -14,9 +14,9 @@ const Table = () => {
     setInfo(response);
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     getUser();
-  }, []);
+  }, []); */
 
   const header = (
     <div className="table-header">
