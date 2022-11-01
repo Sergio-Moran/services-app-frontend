@@ -65,7 +65,7 @@ const Login = () => {
     if (result.status) {
       const accessToken = result.access_token;
       setCookie("accessToken", accessToken, { path: "/" });
-      returnUrl = "/LogPage";
+      returnUrl = "/table";
     } else {
       formik.resetForm();
       returnUrl = "/";
