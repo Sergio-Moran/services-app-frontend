@@ -6,20 +6,39 @@ import "../public/css/Table.module.css";
 import { getUsers, getUser, updateStatus } from "../routes/api.routes";
 import { useCookies } from "react-cookie";
 import { Dialog } from "primereact/dialog";
-import Modal from "./Modal";
 import { Toast } from "primereact/toast";
+import ModalUhS from "./ModalUhS";
+import { useRouter } from "next/router";
 
-const Table = () => {
-  const [displayResponsive, setDisplayResponsive] = useState(false);
-  const [position, setPosition] = useState("center");
+const TableUhS = () => {
+    const router = useRouter();
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);
+  const [position, setPosition] = useState("center");
   const [responses, setResponses] = useState([]);
-  const [userStatus, setUserStatus] = useState();
   const toast = useRef(null);
+  const [displayResponsive, setDisplayResponsive] = useState(false);
   const dialogFuncMap = {
     displayResponsive: setDisplayResponsive,
   };
+
+  const userGet = useCallback(async () => {
+    let cookie = { accessToken: cookies.accessToken };
+    const response = await getUsers(cookie);
+    console.log(response);
+    setInfo(response);
+  }, [cookies.accessToken]);
+
+  const getUhS = useCallback(async (props) => {
+    let cookie = { accessToken: cookies.accessToken };
+    const response = await getUser(cookie, props.id);
+    if (response.status) {
+      setResponses(response);
+      onClick("displayResponsive");
+    } else {
+      console.log("somthing went wrong");
+    }
+  }, []);
 
   const onClick = (name, position) => {
     dialogFuncMap[`${name}`](true);
@@ -31,31 +50,6 @@ const Table = () => {
 
   const onHide = (name) => {
     dialogFuncMap[`${name}`](false);
-  };
-
-  const userGet = useCallback(async () => {
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await getUsers(cookie);
-    console.log(response);
-    setInfo(response);
-  }, [cookies.accessToken]);
-
-  const getUserEdit = useCallback(async (props) => {
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await getUser(cookie, props.id);
-    if (response.status) {
-      setResponses(response);
-      onClick("displayResponsive");
-    } else {
-      console.log("somthing went wrong");
-    }
-  }, []);
-
-  const updatedStatus = async (props) => {
-    const statusNew = { id: props.id, condition: false, table_name: "tbUser" };
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await updateStatus(statusNew, cookie);
-    console.log(response);
   };
 
   const accept = () => {
@@ -76,6 +70,10 @@ const Table = () => {
     });
   };
 
+  const goForm =()=>{
+    router.push('/formUhS')
+  }
+
   const empty = () => {
     toast.current.show({
       severity: "error",
@@ -84,10 +82,6 @@ const Table = () => {
       life: 3000,
     });
   };
-  
-  useEffect(() => {
-    userGet();
-  }, []);
 
   const renderFooter = (name) => {
     return (
@@ -109,7 +103,7 @@ const Table = () => {
         <Button
           className="p-button-info"
           icon="pi pi-pencil"
-          onClick={() => getUserEdit(props)}
+          onClick={() => getUhS(props)}
         />
         &ensp;
         <Button
@@ -125,6 +119,10 @@ const Table = () => {
     return buttonEdit(props);
   };
 
+  useEffect(() => {
+    userGet();
+  }, []);
+
   const header = (
     <div className="table-header">
       Users
@@ -135,6 +133,8 @@ const Table = () => {
           justifyContent: "end",
         }}
       >
+        <Button onClick={goForm} icon="pi pi-plus" className="p-button-success" />
+        &ensp; &ensp;
         <Button onClick={userGet} icon="pi pi-refresh" />
       </div>
     </div>
@@ -159,20 +159,11 @@ const Table = () => {
           style={{ width: "50vw" }}
           footer={renderFooter("displayResponsive")}
         >
-          <Modal
-            id={responses.id}
-            name={responses.name}
-            mail={responses.mail}
-            userGet={userGet}
-            onHide={onHide}
-            accept={accept}
-            reject={reject}
-            empty={empty}
-          />
+          <ModalUhS />
         </Dialog>
       </div>
     </div>
   );
 };
 
-export default Table;
+export default TableUhS;
