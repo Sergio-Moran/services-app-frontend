@@ -9,6 +9,6 @@ import FormPayServices from "../components/FormPayServices";
 
 export default function Home() {
   return (
-    <FormPayServices />
+    <Login />
   )
 }
