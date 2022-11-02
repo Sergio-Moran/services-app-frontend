@@ -1,10 +1,14 @@
-/* const ROUTE = "https://services-app-backend.vercel.app"; */
-const ROUTE = "http://localhost:3002";
+const ROUTE = "https://services-app-backend.vercel.app";
 
-export const getUsers = async () => {
+export const getUsers = async (data) => {
   const response = await fetch(`${ROUTE}/getUsers`, {
     method: "GET",
     credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
   });
   return await response.json();
 };
