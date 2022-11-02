@@ -41,14 +41,14 @@ const TableServices = () => {
   }, [cookies.accessToken]);
 
   const getServiceEdit = useCallback(async (props) => {
-    /* let cookie = { accessToken: cookies.accessToken };
+    let cookie = { accessToken: cookies.accessToken };
     const response = await getUser(cookie, props.id);
     if (response.status) {
       setResponses(response);
       onClick("displayResponsive");
     } else {
       console.log("somthing went wrong");
-    } */
+    }
   }, []);
 
   const updatedStatus = async (props) => {
