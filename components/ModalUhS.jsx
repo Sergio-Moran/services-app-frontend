@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { updateUser } from "../routes/api.routes";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
-const Modal = ({ id, name, mail, onHide, accept, empty, reject, userGet }) => {
+const ModalUhS = ({ id, name, mail, onHide, accept, empty, reject, userGet }) => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [dataUser, setDataUser] = useState({
     id: id,
@@ -130,4 +130,4 @@ const Modal = ({ id, name, mail, onHide, accept, empty, reject, userGet }) => {
   );
 };
 
-export default Modal;
+export default ModalUhS;

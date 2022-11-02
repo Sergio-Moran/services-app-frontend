@@ -26,8 +26,9 @@ const Layout = ({ children }) => {
           separator: true,
         },
         {
-          label: "Export",
-          icon: "pi pi-fw pi-external-link",
+          label: "User has Service",
+          icon: "pi pi-folder",
+          url: "/tableUhS"
         },
       ],
     },
