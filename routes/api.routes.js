@@ -14,6 +14,19 @@ export const getUsers = async (data) => {
   return await response.json();
 };
 
+export const getUser = async (data, id) => {
+  const response = await fetch(`${ROUTE}/getUser/${id}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+  });
+  return await response.json();
+};
+
 export const validateUser = async (userCredentials) => {
   console.log(userCredentials);
   const response = await fetch(`${ROUTE}/validateUser`, {
@@ -30,7 +43,6 @@ export const validateUser = async (userCredentials) => {
 };
 
 export const insertUser = async (data) => {
-  console.log(data)
   const response = await fetch(`${ROUTE}/insertUser`, {
     method: "POST",
     mode: "cors",
