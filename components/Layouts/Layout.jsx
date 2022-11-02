@@ -123,14 +123,14 @@ const Layout = ({ children }) => {
         },
       ],
     },
-/*     {
+    /* {
       label: "Quit",
       icon: "pi pi-fw pi-power-off",
     }, */
   ];
 
   const start = (
-    <i className="pi pi-slack" style={{'fontSize': '2em'}}></i>
+    <i className="pi pi-database" style={{'fontSize': '2em'}}></i>
   );
   const end = <Button icon="pi pi-times" className="p-button-rounded p-button-secondary p-button-text" aria-label="Cancel" />
 
