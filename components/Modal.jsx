@@ -7,7 +7,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/router";
 
-const Modal = ({ id, name, mail, fun }) => {
+const Modal = ({ id, name, mail, userGet }) => {
   const router = useRouter();
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [dataUser, setDataUser] = useState({
@@ -51,11 +51,11 @@ const Modal = ({ id, name, mail, fun }) => {
       console.log(cookies.accessToken);
       let cookie = { accessToken: cookies.accessToken };
       const response = await updateUser({ ...dataUser }, cookie);
-      fun();
+      userGet();
       accept();
     } else if (dataUser.password != "") {
       const response = await updateUser({ ...dataUser }, cookie);
-      fun();
+      userGet();
       accept();
     } else {
       console.log("Empty");

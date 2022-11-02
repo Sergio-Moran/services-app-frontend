@@ -133,7 +133,7 @@ const Table = () => {
             id={responses.id}
             name={responses.name}
             mail={responses.mail}
-            fun={userGet}
+            userGet={userGet}
           />
         </Dialog>
       </div>
