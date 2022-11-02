@@ -86,7 +86,7 @@ export const updateStatus = async (data, cookie) => {
 };
 
 /* Function for services */
-export const insertService = async (data, cookie) => {
+export const insertService = async (data) => {
   const response = await fetch(`${ROUTE}/newService`, {
     method: "POST",
     mode: "cors",
@@ -94,7 +94,7 @@ export const insertService = async (data, cookie) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "x-access-token": cookie.accessToken,
+      "x-access-token": data.accessToken,
     },
     body: JSON.stringify(data),
   });
