@@ -2,6 +2,7 @@ import React from "react";
 import { Menubar } from "primereact/menubar";
 import { InputText } from "primereact/inputtext";
 import Link from "next/link";
+import { Card } from "primereact/card";
 
 const Layout = ({ children }) => {
   const items = [
@@ -151,7 +152,7 @@ const Layout = ({ children }) => {
           <Menubar model={items} start={start} end={end} />
         </div>
       </div>
-      {children}
+      <Card title="">{children}</Card>
     </>
   );
 };
