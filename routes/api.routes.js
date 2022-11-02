@@ -70,3 +70,16 @@ export const updateUser = async (data,cookie) => {
   });
   return await response.json();
 };
+
+export const updateStatus = async (data,cookie) => {
+  const response = await fetch(`${ROUTE}/updateStatus`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": cookie.accessToken,
+    },
+    body: JSON.stringify(data),
+  });
+  return await response.json();
+};
