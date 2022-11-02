@@ -3,6 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { useCookies } from "react-cookie";
 import { useFormik } from "formik";
+import { insertService } from "../routes/api.routes";
 
 const AddService = () => {
   const formik = useFormik({
@@ -20,16 +21,16 @@ const AddService = () => {
 
   const insertedServices = async () => {
     const newService = {
-        name: formik.values.name,
-        description: formik.values.description,
-        price: formik.values.price,
-        accessToken: cookies.accessToken,
-      };
-    /* const response = await insertService(newService);
+      name: formik.values.name,
+      description: formik.values.description,
+      price: formik.values.price,
+      accessToken: cookies.accessToken,
+    };
+    const response = await insertService(newService);
     if (response.status) {
       formik.resetForm();
     }
-    console.log(response); */
+    console.log(response);
     console.log(newService);
   };
 
@@ -93,10 +94,7 @@ const AddService = () => {
             </div>
           </div>
         </div>
-        &ensp;
-        &ensp;
-        &ensp;
-        &ensp;
+        &ensp; &ensp; &ensp; &ensp;
         <div
           style={{
             display: "flex",
