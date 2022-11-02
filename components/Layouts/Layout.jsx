@@ -9,7 +9,7 @@ import { Message } from "primereact/message";
 const Layout = ({ children }) => {
   const items = [
     {
-      label: "File",
+      label: "Services",
       icon: "pi pi-fw pi-file",
       items: [
         {
@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
           icon: "pi pi-fw pi-plus",
           items: [
             {
-              label: "Bookmark",
+              label: "Add Service",
               icon: "pi pi-fw pi-bookmark",
             },
             {
@@ -71,23 +71,9 @@ const Layout = ({ children }) => {
           url: "/register",
         },
         {
-          label: "Delete",
-          icon: "pi pi-fw pi-user-minus",
-        },
-        {
           label: "Search",
           icon: "pi pi-fw pi-users",
           items: [
-            {
-              label: "Filter",
-              icon: "pi pi-fw pi-filter",
-              items: [
-                {
-                  label: "Print",
-                  icon: "pi pi-fw pi-print",
-                },
-              ],
-            },
             {
               icon: "pi pi-fw pi-bars",
               label: "List",
