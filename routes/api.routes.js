@@ -58,7 +58,7 @@ export const insertUser = async (data) => {
   return await response.json();
 };
 
-export const updateUser = async (data,cookie) => {
+export const updateUser = async (data, cookie) => {
   const response = await fetch(`${ROUTE}/updateUser`, {
     method: "PUT",
     headers: {
@@ -71,7 +71,7 @@ export const updateUser = async (data,cookie) => {
   return await response.json();
 };
 
-export const updateStatus = async (data,cookie) => {
+export const updateStatus = async (data, cookie) => {
   const response = await fetch(`${ROUTE}/updateStatus`, {
     method: "PUT",
     headers: {

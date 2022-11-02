@@ -3,7 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import "../public/css/Table.module.css";
-import { getUsers, getUser } from "../routes/api.routes";
+import { getUsers, getUser, updateStatus } from "../routes/api.routes";
 import { useCookies } from "react-cookie";
 import { Dialog } from "primereact/dialog";
 import Modal from "./Modal";
@@ -14,6 +14,7 @@ const Table = () => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);
   const [responses, setResponses] = useState([]);
+  const [userStatus, setUserStatus] = useState();
 
   const dialogFuncMap = {
     displayResponsive: setDisplayResponsive,
@@ -49,8 +50,11 @@ const Table = () => {
     }
   }, []);
 
-  const deleted = (props) => {
-    console.log(props.id);
+  const updatedStatus = async (props) => {
+    const statusNew = { id: props.id, condition: false, table_name: "tbUser" };
+    let cookie = { accessToken: cookies.accessToken };
+    const response = await updateStatus(statusNew, cookie);
+    console.log(response);
   };
 
   useEffect(() => {
@@ -82,7 +86,7 @@ const Table = () => {
         <Button
           className="p-button-danger"
           icon="pi pi-trash"
-          onClick={() => deleted(props)}
+          onClick={() => updatedStatus(props)}
         />
       </div>
     );
@@ -124,7 +128,11 @@ const Table = () => {
           style={{ width: "50vw" }}
           footer={renderFooter("displayResponsive")}
         >
-          <Modal id={responses.id} name={responses.name} mail={responses.mail} />
+          <Modal
+            id={responses.id}
+            name={responses.name}
+            mail={responses.mail}
+          />
         </Dialog>
       </div>
     </div>
