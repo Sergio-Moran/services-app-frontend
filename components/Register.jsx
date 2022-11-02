@@ -60,13 +60,12 @@ const Register = () => {
       name: formik.values.name,
       mail: formik.values.mail,
       password: formik.values.password,
+      accessToken: cookies.accessToken,
     };
     const result = await insertUser(newUser);
     let returnUrl = "";
     console.log(result);
     if (result.status) {
-      const accessToken = result.access_token;
-      setCookie("accessToken", accessToken, { path: "/" });
       returnUrl = "/menu";
     } else {
       formik.resetForm();
