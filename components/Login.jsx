@@ -39,9 +39,6 @@ const Login = () => {
     },
     onSubmit: (data) => {
       setFormData(data);
-      /* console.log(data); */
-      /* setShowMessage(true); */
-      /* formik.resetForm(); */
     },
   });
 

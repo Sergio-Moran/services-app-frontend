@@ -30,6 +30,7 @@ export const validateUser = async (userCredentials) => {
 };
 
 export const insertUser = async (data) => {
+  console.log(data)
   const response = await fetch(`${ROUTE}/insertUser`, {
     method: "POST",
     mode: "cors",
