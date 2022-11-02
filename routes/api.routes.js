@@ -101,3 +101,16 @@ export const insertService = async (data) => {
 
   return await response.json();
 };
+
+export const getObjects = async (data) => {
+  const response = await fetch(`${ROUTE}/getObjects/${data.table}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+  });
+  return await response.json();
+};

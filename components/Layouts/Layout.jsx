@@ -18,8 +18,9 @@ const Layout = ({ children }) => {
           url: "/service"
         },
         {
-          label: "Delete",
-          icon: "pi pi-fw pi-trash",
+          label: "List",
+          icon: "pi pi-fw pi-bars",
+          url: "/menuService"
         },
         {
           separator: true,
