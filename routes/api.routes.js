@@ -130,3 +130,16 @@ export const getEntityById = async (data) => {
   );
   return await response.json();
 };
+
+export const updateEntity = async (body, data) => {
+  const response = await fetch(`${ROUTE}/update${data.table}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+    body: JSON.stringify(body),
+  });
+  return await response.json();
+};

@@ -169,40 +169,48 @@ const TableServices = () => {
   );
 
   return (
-    <div className="datatable-templating-demo">
-      <div className="card">
-        <DataTable value={info} header={header} responsiveLayout="scroll">
-          <Column field="id" header="Cod."></Column>
-          <Column field="name" header="Service Name"></Column>
-          <Column field="price" header="Price"></Column>
-          <Column field="description" header="Description"></Column>
-          <Column field="" header="Actions" body={codeEditor}></Column>
-        </DataTable>
+    <>
+      <div
+        style={{
+          height: "auto",
+        }}
+      >
+        <div className="datatable-templating-demo">
+          <div className="card">
+            <DataTable value={info} header={header} responsiveLayout="scroll">
+              <Column field="id" header="Cod."></Column>
+              <Column field="name" header="Service Name"></Column>
+              <Column field="price" header="Price"></Column>
+              <Column field="description" header="Description"></Column>
+              <Column field="" header="Actions" body={codeEditor}></Column>
+            </DataTable>
 
-        <Toast ref={toast} />
-        <Dialog
-          header="Services"
-          visible={displayResponsive}
-          onHide={() => onHide("displayResponsive")}
-          breakpoints={{ "960px": "75vw" }}
-          style={{ width: "50vw" }}
-          footer={renderFooter("displayResponsive")}
-        >
-          <ModalService
-            idService={responses.idService}
-            idPrice={responses.idPrice}
-            nameService={responses.nameService}
-            price={responses.price}
-            descriptionService={responses.descriptionService}
-            serviceGet={serviceGet}
-            onHide={onHide}
-            accept={accept}
-            reject={reject}
-            empty={empty}
-          />
-        </Dialog>
+            <Toast ref={toast} />
+            <Dialog
+              header="Services"
+              visible={displayResponsive}
+              onHide={() => onHide("displayResponsive")}
+              breakpoints={{ "960px": "75vw" }}
+              style={{ width: "50vw" }}
+              footer={renderFooter("displayResponsive")}
+            >
+              <ModalService
+                idService={responses.idService}
+                idPrice={responses.idPrice}
+                nameService={responses.nameService}
+                price={responses.price}
+                descriptionService={responses.descriptionService}
+                serviceGet={serviceGet}
+                onHide={onHide}
+                accept={accept}
+                reject={reject}
+                empty={empty}
+              />
+            </Dialog>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

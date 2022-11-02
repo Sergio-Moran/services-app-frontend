@@ -2,7 +2,7 @@ import React, { useCallback, useState, useRef } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { useCookies } from "react-cookie";
-import { updateUser } from "../routes/api.routes";
+import { updateEntity, updateUser } from "../routes/api.routes";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 const ModalService = ({
@@ -17,16 +17,16 @@ const ModalService = ({
   reject,
   serviceGet,
 }) => {
-  const [cookies, setCookie] = useCookies(["accessToken"]);
+  const [cookies] = useCookies(["accessToken"]);
   const [dataService, setService] = useState({
     id: idService,
-    name: "",
-    description: "",
+    name: null,
+    description: null,
   });
 
   const [dataPrice, setPrice] = useState({
     id: idPrice,
-    price: "",
+    price: null,
   });
   const [visible, setVisible] = useState(false);
 
@@ -41,19 +41,28 @@ const ModalService = ({
   };
 
   const updated = async () => {
-    if (dataUser.name != "") {
-      console.log(cookies.accessToken);
-      let cookie = { accessToken: cookies.accessToken };
-      const response = await updateUser({ ...dataUser }, cookie);
+    if (
+      dataService.name == null &&
+      dataService.description == null &&
+      dataPrice.price == null
+    ) {
+      empty();
+      onHide("displayResponsive");
+    } else {
+      if (dataService.name != null || dataService.description != null) {
+        const data = { accessToken: cookies.accessToken, table: "Service" };
+        const upService = await updateEntity({ ...dataService }, data);
+      }
+      if (dataPrice.price != null) {
+        const data = {
+          accessToken: cookies.accessToken,
+          table: "ServicePrice",
+        };
+        const upService = await updateEntity({ ...dataPrice }, data);
+      }
       serviceGet();
       onHide("displayResponsive");
       accept();
-    } else if (dataUser.password != "") {
-      const response = await updateUser({ ...dataUser }, cookie);
-      serviceGet();
-      accept();
-    } else {
-      empty();
     }
   };
 
