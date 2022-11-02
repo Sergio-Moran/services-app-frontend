@@ -6,6 +6,7 @@ import "../public/css/Table.module.css";
 import { getUsers } from "../routes/api.routes";
 
 import { useCookies } from "react-cookie";
+import Layout from "./Layouts/Layout";
 const Table = () => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);

@@ -6,16 +6,12 @@ import "primeflex/primeflex.css";
 import MenuBar from "../components/MenuBar";
 import FormPayServices from "../components/FormPayServices";
 import { useRouter } from 'next/router'
-
+import Layout from "../components/Layouts/Layout";
 const menu = () => {
-    
-  console.log(window.location.href);
   return (
-    <>
-      <MenuBar />
-
+    <Layout>
       <FormPayServices />
-    </>
+    </Layout>
   );
 };
 
