@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 import { Dialog } from "primereact/dialog";
 import Modal from "./Modal";
 
+import { Toast } from "primereact/toast";
 const Table = () => {
   const [displayResponsive, setDisplayResponsive] = useState(false);
   const [position, setPosition] = useState("center");
@@ -15,7 +16,7 @@ const Table = () => {
   const [info, setInfo] = useState([]);
   const [responses, setResponses] = useState([]);
   const [userStatus, setUserStatus] = useState();
-
+  const toast = useRef(null);
   const dialogFuncMap = {
     displayResponsive: setDisplayResponsive,
   };
@@ -57,6 +58,32 @@ const Table = () => {
     console.log(response);
   };
 
+  const accept = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Confirmed",
+      detail: "User Updated Successfully",
+      life: 3000,
+    });
+  };
+
+  const reject = () => {
+    toast.current.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "You have rejected",
+      life: 3000,
+    });
+  };
+
+  const empty = () => {
+    toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: "All Fields Are Empty",
+      life: 3000,
+    });
+  };
   useEffect(() => {
     userGet();
   }, []);
@@ -121,6 +148,8 @@ const Table = () => {
           <Column field="mail" header="Email"></Column>
           <Column field="" header="Actions" body={codeEditor}></Column>
         </DataTable>
+
+        <Toast ref={toast} />
         <Dialog
           header="Header"
           visible={displayResponsive}
@@ -134,6 +163,10 @@ const Table = () => {
             name={responses.name}
             mail={responses.mail}
             userGet={userGet}
+            onHide={onHide}
+            accept={accept}
+            reject={reject}
+            empty={empty}
           />
         </Dialog>
       </div>
