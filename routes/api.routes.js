@@ -4,7 +4,6 @@ const ROUTE = "https://services-app-backend.vercel.app";
 export const getUsers = async () => {
   const response = await fetch(`${ROUTE}/getUsers`, {
     method: "GET",
-    mode: "cors",
     credentials: "include",
   });
   return await response.json();
