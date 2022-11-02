@@ -28,3 +28,19 @@ export const validateUser = async (userCredentials) => {
   });
   return await response.json();
 };
+
+export const insertUser = async (data) => {
+  const response = await fetch(`${ROUTE}/insertUser`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await response.json();
+};
