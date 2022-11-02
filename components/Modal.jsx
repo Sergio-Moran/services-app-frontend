@@ -5,8 +5,10 @@ import { useCookies } from "react-cookie";
 import { updateUser } from "../routes/api.routes";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
+import { useRouter } from "next/router";
 
-const Modal = ({ id, name, mail }) => {
+const Modal = ({ id, name, mail, fun }) => {
+  const router = useRouter();
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [dataUser, setDataUser] = useState({
     id: id,
@@ -49,6 +51,7 @@ const Modal = ({ id, name, mail }) => {
       console.log(cookies.accessToken);
       let cookie = { accessToken: cookies.accessToken };
       const response = await updateUser({ ...dataUser }, cookie);
+      fun();
       accept();
     } else if (dataUser.password != "") {
       const response = await updateUser({ ...dataUser }, cookie);
