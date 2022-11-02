@@ -5,11 +5,14 @@ import { Button } from "primereact/button";
 import "../public/css/Table.module.css";
 import { getUsers } from "../routes/api.routes";
 
+import { useCookies } from "react-cookie";
 const Table = () => {
+  const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);
 
   const getUser = useCallback(async () => {
-    const response = await getUsers();
+    let cookie = { accessToken: cookies.accessToken };
+    const response = await getUsers(cookie);
     console.log(response);
     setInfo(response);
   }, []);
