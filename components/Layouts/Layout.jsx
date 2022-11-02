@@ -1,7 +1,6 @@
 import React from "react";
 import { Menubar } from "primereact/menubar";
-import { InputText } from "primereact/inputtext";
-import Link from "next/link";
+import { Button } from "primereact/button";
 
 const Layout = ({ children }) => {
   const items = [
@@ -65,6 +64,7 @@ const Layout = ({ children }) => {
         {
           label: "New",
           icon: "pi pi-fw pi-user-plus",
+          url: "/register",
         },
         {
           label: "Delete",
@@ -123,26 +123,16 @@ const Layout = ({ children }) => {
         },
       ],
     },
-    {
+/*     {
       label: "Quit",
       icon: "pi pi-fw pi-power-off",
-    },
+    }, */
   ];
 
   const start = (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      alt="logo"
-      src="showcase/images/logo.png"
-      onError={(e) =>
-        (e.target.src =
-          "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
-      }
-      height="40"
-      className="mr-2"
-    ></img>
+    <i className="pi pi-slack" style={{'fontSize': '2em'}}></i>
   );
-  const end = <InputText placeholder="Search" type="text" />;
+  const end = <Button icon="pi pi-times" className="p-button-rounded p-button-secondary p-button-text" aria-label="Cancel" />
 
   return (
     <>
