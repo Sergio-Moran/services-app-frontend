@@ -76,13 +76,13 @@ const Table = () => {
         <Button
           className="p-button-info"
           icon="pi pi-pencil"
-          onClick={(e) => getUserEdit(props)}
+          onClick={() => getUserEdit(props)}
         />
         &ensp;
         <Button
           className="p-button-danger"
           icon="pi pi-trash"
-          onClick={(e) => deleted(props)}
+          onClick={() => deleted(props)}
         />
       </div>
     );
