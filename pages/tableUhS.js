@@ -8,9 +8,9 @@ import TableUhS from "../components/TableUhS";
 const tableUhS = () => {
   return (
     <Layout>
-        <TableUhS />
+      <TableUhS />
     </Layout>
-  )
-}
+  );
+};
 
-export default tableUhS
+export default tableUhS;
