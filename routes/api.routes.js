@@ -114,3 +114,19 @@ export const getObjects = async (data) => {
   });
   return await response.json();
 };
+
+export const getEntityById = async (data) => {
+  const response = await fetch(
+    `${ROUTE}/getEntityById/${data.table}/${data.id}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-access-token": data.accessToken,
+      },
+    }
+  );
+  return await response.json();
+};

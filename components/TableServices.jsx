@@ -3,7 +3,13 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import "../public/css/Table.module.css";
-import { getUsers, getUser, updateStatus, getObjects } from "../routes/api.routes";
+import {
+  getUsers,
+  getUser,
+  updateStatus,
+  getObjects,
+  getEntityById,
+} from "../routes/api.routes";
 import { useCookies } from "react-cookie";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
@@ -34,16 +40,35 @@ const TableServices = () => {
   };
 
   const serviceGet = useCallback(async () => {
-    let cookie = { accessToken: cookies.accessToken, table:'tbService' };
+    let cookie = { accessToken: cookies.accessToken, table: "tbService" };
     const response = await getObjects(cookie);
     console.log(response);
     setInfo(response);
   }, [cookies.accessToken]);
 
   const getServiceEdit = useCallback(async (props) => {
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await getUser(cookie, props.id);
-    if (response.status) {
+    let dataService = {
+      accessToken: cookies.accessToken,
+      table: "tbService",
+      id: props.id,
+    };
+    let dataPrice = {
+      accessToken: cookies.accessToken,
+      table: "tbServicePrice",
+      id: props.idPrice,
+    };
+    const resService = await getEntityById(dataService);
+    const resPrice = await getEntityById(dataPrice);
+    console.log(resService);
+    console.log(resPrice);
+    if (resService.status && resPrice.status) {
+      const response = {
+        idService: resService.id,
+        idPrice: resPrice.id,
+        nameService: resService.name,
+        price: resPrice.price,
+        descriptionService: resService.description,
+      };
       setResponses(response);
       onClick("displayResponsive");
     } else {
@@ -52,7 +77,11 @@ const TableServices = () => {
   }, []);
 
   const updatedStatus = async (props) => {
-    const statusNew = { id: props.id, condition: false, table_name: "tbService" };
+    const statusNew = {
+      id: props.id,
+      condition: false,
+      table_name: "tbService",
+    };
     let cookie = { accessToken: cookies.accessToken };
     const response = await updateStatus(statusNew, cookie);
     console.log(response);
@@ -160,10 +189,11 @@ const TableServices = () => {
           footer={renderFooter("displayResponsive")}
         >
           <ModalService
-            id={responses.id}
-            name={responses.name}
+            idService={responses.idService}
+            idPrice={responses.idPrice}
+            nameService={responses.nameService}
             price={responses.price}
-            description={responses.description}
+            descriptionService={responses.descriptionService}
             serviceGet={serviceGet}
             onHide={onHide}
             accept={accept}

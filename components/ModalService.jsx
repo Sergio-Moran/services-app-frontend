@@ -6,10 +6,11 @@ import { updateUser } from "../routes/api.routes";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 const ModalService = ({
-  id,
-  name,
+  idService,
+  idPrice,
+  nameService,
   price,
-  description,
+  descriptionService,
   onHide,
   accept,
   empty,
@@ -17,10 +18,15 @@ const ModalService = ({
   serviceGet,
 }) => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
-  const [dataUser, setDataUser] = useState({
-    id: id,
+  const [dataService, setService] = useState({
+    id: idService,
     name: "",
-    password: "",
+    description: "",
+  });
+
+  const [dataPrice, setPrice] = useState({
+    id: idPrice,
+    price: "",
   });
   const [visible, setVisible] = useState(false);
 
@@ -52,8 +58,12 @@ const ModalService = ({
   };
 
   const handlChange = (name, value) => {
-    setDataUser({
-      ...dataUser,
+    setService({
+      ...dataService,
+      [name]: value,
+    });
+    setPrice({
+      ...dataPrice,
       [name]: value,
     });
   };
@@ -71,40 +81,42 @@ const ModalService = ({
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
-                <i className="pi pi-user"></i>
+                <i className="pi pi-cog"></i>
               </span>
               <InputText
                 id="name"
                 name="name"
-                placeholder={name}
+                placeholder={nameService}
                 onChange={(e) => handlChange(e.target.id, e.target.value)}
               />
             </div>
           </div>
-          &ensp;
+
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
-                <i className="pi pi-google" />
+                <i className="pi pi-dollar" />
               </span>
               <InputText
+                type="number"
                 id="price"
                 name="price"
                 placeholder={price}
                 onChange={(e) => handlChange(e.target.id, e.target.value)}
               />
+              <span className="p-inputgroup-addon">.00</span>
             </div>
           </div>
-          &ensp;
+
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
-                <i className="pi pi-lock" />
+                <i className="pi pi-pencil" />
               </span>
               <InputText
                 id="description"
                 name="description"
-                placeholder={description}
+                placeholder={descriptionService}
                 onChange={(e) => handlChange(e.target.id, e.target.value)}
               />
             </div>
