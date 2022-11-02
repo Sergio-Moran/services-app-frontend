@@ -16,7 +16,6 @@ const Modal = ({ id, name, mail }) => {
     if (dataUser.name != "") {
       let cookie = { accessToken: cookies.accessToken };
       const response = await updateUser({ ...dataUser }, cookie);
-      console.log(response);
     } else if (dataUser.password != "") {
       const response = await updateUser({ ...dataUser }, cookie);
     } else {
@@ -29,9 +28,6 @@ const Modal = ({ id, name, mail }) => {
       ...dataUser,
       [name]: value,
     });
-  };
-  const deleted = (props) => {
-    console.log(props.id);
   };
 
   return (
@@ -51,6 +47,7 @@ const Modal = ({ id, name, mail }) => {
               </span>
               <InputText
                 id="name"
+                name="name"
                 placeholder={name}
                 onChange={(e) => handlChange(e.target.id, e.target.value)}
               />
@@ -62,7 +59,13 @@ const Modal = ({ id, name, mail }) => {
               <span className="p-inputgroup-addon">
                 <i className="pi pi-google" />
               </span>
-              <InputText disabled placeholder={mail} className="" />
+              <InputText
+                id="mail"
+                name="mail"
+                placeholder={mail}
+                disabled
+                onChange={(e) => handlChange(e.target.id, e.target.value)}
+              />
             </div>
           </div>
           &ensp;
