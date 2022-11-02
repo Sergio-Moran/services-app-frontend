@@ -5,8 +5,9 @@ import { useCookies } from "react-cookie";
 import { updateUser } from "../routes/api.routes";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
+import { Dialog } from "primereact/dialog";
 
-const Modal = ({ id, name, mail }) => {
+const Modal = ({ id, name, mail, onHide, accept, empty, reject }) => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [dataUser, setDataUser] = useState({
     id: id,
@@ -14,16 +15,6 @@ const Modal = ({ id, name, mail }) => {
     password: "",
   });
   const [visible, setVisible] = useState(false);
-  const toast = useRef(null);
-
-  const accept = () => {
-    toast.current.show({
-      severity: "success",
-      summary: "Confirmed",
-      detail: "User Updated Successfully",
-      life: 3000,
-    });
-  };
 
   const confirm1 = () => {
     confirmDialog({
@@ -35,32 +26,18 @@ const Modal = ({ id, name, mail }) => {
     });
   };
 
-  const reject = () => {
-    toast.current.show({
-      severity: "warn",
-      summary: "Rejected",
-      detail: "You have rejected",
-      life: 3000,
-    });
-  };
-
   const updated = async () => {
     if (dataUser.name != "") {
       console.log(cookies.accessToken);
       let cookie = { accessToken: cookies.accessToken };
       const response = await updateUser({ ...dataUser }, cookie);
+      onHide("displayResponsive");
       accept();
     } else if (dataUser.password != "") {
       const response = await updateUser({ ...dataUser }, cookie);
       accept();
     } else {
-      console.log("Empty");
-      toast.current.show({
-        severity: "error",
-        summary: "Error",
-        detail: "All Fields Are Empty",
-        life: 3000,
-      });
+      empty();
     }
   };
 
@@ -80,7 +57,6 @@ const Modal = ({ id, name, mail }) => {
           padding: 10,
         }}
       >
-        <Toast ref={toast} />
         <div className="grid p-fluid">
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
