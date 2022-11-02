@@ -55,6 +55,7 @@ const Modal = ({ id, name, mail, fun }) => {
       accept();
     } else if (dataUser.password != "") {
       const response = await updateUser({ ...dataUser }, cookie);
+      fun();
       accept();
     } else {
       console.log("Empty");
