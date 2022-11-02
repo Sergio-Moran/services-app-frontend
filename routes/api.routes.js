@@ -58,16 +58,15 @@ export const insertUser = async (data) => {
   return await response.json();
 };
 
-export const updateUser = async (data) => {
-  console.log(data);
+export const updateUser = async (data,cookie) => {
   const response = await fetch(`${ROUTE}/updateUser`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "x-access-token": data.accessToken,
+      "x-access-token": cookie.accessToken,
     },
-    body: JSON.stringify(completed),
+    body: JSON.stringify(data),
   });
   return await response.json();
 };
