@@ -87,7 +87,7 @@ export const updateStatus = async (data, cookie) => {
 
 /* Function for services */
 export const insertService = async (data, cookie) => {
-  const response = await fetch(`${ROUTE}/insertService`, {
+  const response = await fetch(`${ROUTE}/newService`, {
     method: "POST",
     mode: "cors",
     credentials: "same-origin",
