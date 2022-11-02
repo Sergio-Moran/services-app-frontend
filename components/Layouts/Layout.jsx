@@ -1,8 +1,10 @@
-import React from "react";
 import { Menubar } from "primereact/menubar";
 import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
+import React, { useEffect, useRef } from "react";
+import { Messages } from "primereact/messages";
+import { Message } from "primereact/message";
 
 const Layout = ({ children }) => {
   const items = [
@@ -131,10 +133,29 @@ const Layout = ({ children }) => {
     }, */
   ];
 
-  const start = (
-    <i className="pi pi-database" style={{'fontSize': '2em'}}></i>
+  const start = <i className="pi pi-database" style={{ fontSize: "2em" }}></i>;
+  const end = (
+    <Button
+      icon="pi pi-times"
+      className="p-button-rounded p-button-secondary p-button-text"
+      aria-label="Cancel"
+    />
   );
-  const end = <Button icon="pi pi-times" className="p-button-rounded p-button-secondary p-button-text" aria-label="Cancel" />
+
+  const footer = (
+    <span>
+      <Message
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          justifyContent: "center",
+        }}
+        severity="alert"
+        text="Services App Copyright &copy;"
+      />
+    </span>
+  );
 
   return (
     <>
@@ -144,6 +165,27 @@ const Layout = ({ children }) => {
         </div>
       </div>
       <Card title="">{children}</Card>
+      <div
+        className="footer"
+        style={{
+          display: "flex",
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
+        <Card
+          title=""
+          footer={footer}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        ></Card>
+      </div>
     </>
   );
 };
