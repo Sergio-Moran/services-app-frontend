@@ -1,6 +1,7 @@
 /* const ROUTE = "https://services-app-backend.vercel.app"; */
 const ROUTE = "http://localhost:3002";
 
+/* Functions for Users */
 export const getUsers = async (data) => {
   const response = await fetch(`${ROUTE}/getUsers`, {
     method: "GET",
@@ -81,5 +82,22 @@ export const updateStatus = async (data, cookie) => {
     },
     body: JSON.stringify(data),
   });
+  return await response.json();
+};
+
+/* Function for services */
+export const insertService = async (data, cookie) => {
+  const response = await fetch(`${ROUTE}/insertService`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": cookie.accessToken,
+    },
+    body: JSON.stringify(data),
+  });
+
   return await response.json();
 };
