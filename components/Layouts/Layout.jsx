@@ -15,16 +15,7 @@ const Layout = ({ children }) => {
         {
           label: "New",
           icon: "pi pi-fw pi-plus",
-          items: [
-            {
-              label: "Add Service",
-              icon: "pi pi-fw pi-bookmark",
-            },
-            {
-              label: "Video",
-              icon: "pi pi-fw pi-video",
-            },
-          ],
+          url: "/service"
         },
         {
           label: "Delete",
