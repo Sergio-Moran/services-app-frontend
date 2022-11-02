@@ -115,7 +115,7 @@ const Register = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh",
+          height: "75vh",
         }}
       >
         <Card title="Register" style={{ width: "25rem", marginBottom: "2em" }}>
