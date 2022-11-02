@@ -61,13 +61,7 @@ const Table = () => {
     return (
       <div>
         <Button
-          label="No"
-          icon="pi pi-times"
-          onClick={() => onHide(name)}
-          className="p-button-text"
-        />
-        <Button
-          label="Yes"
+          label="Cancel"
           icon="pi pi-check"
           onClick={() => onHide(name)}
           autoFocus
