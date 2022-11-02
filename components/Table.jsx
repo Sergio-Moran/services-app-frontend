@@ -10,16 +10,16 @@ const Table = () => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     let cookie = { accessToken: cookies.accessToken };
     const response = await getUsers(cookie);
     console.log(response);
     setInfo(response);
-  };
+  }, [cookies.accessToken]);
 
-/*   useEffect(() => {
+  useEffect(() => {
     getUser();
-  }, []); */
+  }, []);
 
   const header = (
     <div className="table-header">
