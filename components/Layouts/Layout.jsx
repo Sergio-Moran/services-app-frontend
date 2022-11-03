@@ -4,6 +4,9 @@ import { Button } from "primereact/button";
 import React from "react";
 import { Message } from "primereact/message";
 import Link from "next/link";
+import { useCookies } from "react-cookie";
+import { closeSession } from "../../routes/api.routes";
+import { useRouter } from "next/router";
 
 const Layout = ({ children }) => {
   const items = [
@@ -73,6 +76,18 @@ const Layout = ({ children }) => {
     <Link></Link>;
   };
 
+  const [cookies, setCookie] = useCookies(["accessToken"]);
+  const router = useRouter();
+
+  const closeActualSession = async () => {
+    let cookie = { accessToken: cookies.accessToken };
+    const response = await closeSession(cookie);
+    if(response.status){
+      router.push("/");
+    }
+    console.log(response);
+  };
+
   const start = (
     <Link href="/dashboard">
       <i
@@ -86,6 +101,7 @@ const Layout = ({ children }) => {
       icon="pi pi-times"
       className="p-button-rounded p-button-secondary p-button-text"
       aria-label="Cancel"
+      onClick={closeActualSession}
     />
   );
 

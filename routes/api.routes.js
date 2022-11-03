@@ -224,3 +224,16 @@ export const insertRoleHasPermission = async (data) => {
 
   return await response.json();
 };
+
+export const closeSession = async (data) => {
+  const response = await fetch(`${ROUTE}/closeSession`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+  });
+  return await response.json();
+};
