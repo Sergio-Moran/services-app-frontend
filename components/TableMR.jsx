@@ -167,8 +167,7 @@ const TableMR = () => {
           <Column field="description" header="Comment"></Column>
           <Column field="user_name" header="Customer"></Column>
           <Column field="method_name" header="Payment Method"></Column>
-          <Column field="payments" header="Payments"></Column>
-          <Column field="period" header="Payment Period (days)"></Column>
+          <Column field="period" header="Date"></Column>
           <Column field="interest" header="Interest"></Column>
           <Column field="" header="Actions" body={codeEditor}></Column>
         </DataTable>

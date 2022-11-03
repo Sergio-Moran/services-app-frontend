@@ -77,11 +77,7 @@ const FormPayServices = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        height: "75vh",
-      }}
-    >
+    <div>
       <div
         style={{
           display: "flex",
