@@ -3,13 +3,7 @@ import { ListBox } from "primereact/listbox";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useCookies } from "react-cookie";
-import {
-  getEntityById,
-  getObjects,
-  getUser,
-  getUsers,
-  insertUserHasService,
-} from "../routes/api.routes";
+import { getObjects, getUser, insertPaymentRecord } from "../routes/api.routes";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
 
@@ -23,10 +17,8 @@ const FormPayServices = () => {
   /* Formik */
   const formik = useFormik({
     initialValues: {
-      service_id: "",
-      description: "",
-      user_id: "",
-      method_id: "",
+      price: "",
+      user_service_id: "",
     },
     onSubmit: (data) => {
       setFormData(data);
@@ -34,19 +26,17 @@ const FormPayServices = () => {
   });
 
   /* Insert data */
-  const insertedUhS = async () => {
-    /* const newUhS = {
-      service_id: dataS,
-      description: formik.values.description,
-      user_id: dataU,
-      method_id: dataM,
+  const insertPr = async () => {
+    const newPr = {
+      price: formik.values.price,
+      user_service_id: dataUhS,
       accessToken: cookies.accessToken,
     };
-    const response = await insertUserHasService(newUhS);
+    const response = await insertPaymentRecord(newPr);
     if (response.status) {
       formik.resetForm();
     }
-    console.log(response); */
+    console.log(response);
   };
 
   /* Get services */
@@ -66,6 +56,7 @@ const FormPayServices = () => {
       const response = await getUser(cookie, dataUhS);
       if (response.status) {
         setDataEditUhS(response);
+        console.log(response);
       } else {
         console.log("something went wrong");
       }
@@ -74,12 +65,16 @@ const FormPayServices = () => {
   );
 
   for (let i = 0; i < uHs.length; i++) {
-    uHsElement.push({ label: uHs[i].name, value: uHs[i].id });
+    uHsElement.push({ label: uHs[i].description, value: uHs[i].id });
   }
 
   const render = () => {
     getUserEdit(dataUhS);
   };
+
+  useEffect(() => {
+    uHsGet();
+  }, []);
 
   return (
     <div
@@ -136,7 +131,7 @@ const FormPayServices = () => {
                 id="name"
                 name="name"
                 disabled
-                /* placeholder={dataEditU.name} */
+                placeholder={dataEditUhS.name}
                 onChange={formik.handleChange}
               />
             </div>
@@ -151,7 +146,7 @@ const FormPayServices = () => {
                 id="mail"
                 name="mail"
                 disabled
-                /* placeholder={dataEditU.mail} */
+                placeholder={dataEditUhS.mail}
                 onChange={formik.handleChange}
               />
             </div>
@@ -160,17 +155,33 @@ const FormPayServices = () => {
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
-                <i className="pi pi-pencil" />
+                <i className="pi pi-money-bill" />
               </span>
               <InputText
-                id="status"
-                name="status"
-                disabled
-                /* placeholder={dataEditU.status == true ? "ACTIVE" : "INACTIVE"} */
+                type="number"
+                id="price"
+                name="price"
+                placeholder="Price"
+                value={formik.values.price}
                 onChange={formik.handleChange}
               />
             </div>
           </div>
+        </div>
+        &ensp; &ensp; &ensp; &ensp;
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            label="Success"
+            type="button"
+            className="p-button-rounded p-button-success"
+            onClick={insertPr}
+          />
         </div>
       </form>
     </div>
