@@ -3,7 +3,12 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import "../public/css/Table.module.css";
-import { getUsers, getUser, updateStatus } from "../routes/api.routes";
+import {
+  getUsers,
+  getUser,
+  updateStatus,
+  getObjects,
+} from "../routes/api.routes";
 import { useCookies } from "react-cookie";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
@@ -11,7 +16,7 @@ import ModalUhS from "./ModalUhS";
 import { useRouter } from "next/router";
 
 const TableUhS = () => {
-    const router = useRouter();
+  const router = useRouter();
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);
   const [position, setPosition] = useState("center");
@@ -22,16 +27,22 @@ const TableUhS = () => {
     displayResponsive: setDisplayResponsive,
   };
 
-  const userGet = useCallback(async () => {
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await getUsers(cookie);
+  const userHasServiceGet = useCallback(async () => {
+    let cookie = {
+      accessToken: cookies.accessToken,
+      table: "getUserHasService",
+    };
+    const response = await getObjects(cookie);
     console.log(response);
     setInfo(response);
   }, [cookies.accessToken]);
 
   const getUhS = useCallback(async (props) => {
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await getUser(cookie, props.id);
+    let cookie = {
+      accessToken: cookies.accessToken,
+      table: "getUserHasService",
+    };
+    const response = await getObjects(cookie);
     if (response.status) {
       setResponses(response);
       onClick("displayResponsive");
@@ -70,9 +81,9 @@ const TableUhS = () => {
     });
   };
 
-  const goForm =()=>{
-    router.push('/formUhS')
-  }
+  const goForm = () => {
+    router.push("/formUhS");
+  };
 
   const empty = () => {
     toast.current.show({
@@ -96,16 +107,21 @@ const TableUhS = () => {
       </div>
     );
   };
+  const updatedStatus = async (props) => {
+    const statusNew = {
+      id: props.id,
+      condition: false,
+      table_name: "tbUserHasService",
+    };
+    let cookie = { accessToken: cookies.accessToken };
+    const response = await updateStatus(statusNew, cookie);
+    userHasServiceGet();
+    console.log(response);
+  };
 
   const buttonEdit = (props) => {
     return (
       <div>
-        {/* <Button
-          className="p-button-info"
-          icon="pi pi-pencil"
-          onClick={() => getUhS(props)}
-        /> */}
-        &ensp;
         <Button
           className="p-button-danger"
           icon="pi pi-trash"
@@ -120,7 +136,7 @@ const TableUhS = () => {
   };
 
   useEffect(() => {
-    userGet();
+    userHasServiceGet();
   }, []);
 
   const header = (
@@ -133,9 +149,13 @@ const TableUhS = () => {
           justifyContent: "end",
         }}
       >
-        <Button onClick={goForm} icon="pi pi-plus" className="p-button-success" />
+        <Button
+          onClick={goForm}
+          icon="pi pi-plus"
+          className="p-button-success"
+        />
         &ensp; &ensp;
-        <Button onClick={userGet} icon="pi pi-refresh" />
+        <Button onClick={userHasServiceGet} icon="pi pi-refresh" />
       </div>
     </div>
   );
@@ -145,8 +165,13 @@ const TableUhS = () => {
       <div className="card">
         <DataTable value={info} header={header} responsiveLayout="scroll">
           <Column field="id" header="Cod."></Column>
-          <Column field="name" header="Name"></Column>
-          <Column field="mail" header="Service"></Column>
+          <Column field="service_name" header="Service"></Column>
+          <Column field="description" header="Comment"></Column>
+          <Column field="user_name" header="Customer"></Column>
+          <Column field="method_name" header="Payment Method"></Column>
+          <Column field="payments" header="Payments"></Column>
+          <Column field="period" header="Payment Period (days)"></Column>
+          <Column field="interest" header="Interest"></Column>
           <Column field="" header="Actions" body={codeEditor}></Column>
         </DataTable>
 
