@@ -3,25 +3,52 @@ import { ListBox } from "primereact/listbox";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useCookies } from "react-cookie";
-import { getObjects, getUsers } from "../routes/api.routes";
+import { getObjects, getUser, getUsers } from "../routes/api.routes";
 import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
+import { useFormik } from "formik";
 
 const FormUhS = (props) => {
   const [user, setUser] = useState("");
   const [dataU, setDataU] = useState("");
   const [dataS, setDataS] = useState("");
+  const [dataEditU, setDataEditU] = useState("");
+  const [dataEditS, setDataEditS] = useState("");
   const [service, setService] = useState("");
   const [cookies, setCookie] = useCookies(["accessToken"]);
   let userElement = [];
   let serviceElement = [];
 
+  /* Formik */
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      description: "",
+      price: "",
+    },
+    onSubmit: (data) => {
+      setFormData(data);
+    },
+  });
+
+  /* Insert data */
+  const insertedUhS = async () => {
+    const newService = {
+      name: formik.values.name,
+      description: formik.values.description,
+      price: formik.values.price,
+      accessToken: cookies.accessToken,
+    };
+  };
+
+  /* Get users */
   const userGet = useCallback(async () => {
     let cookie = { accessToken: cookies.accessToken };
     const response = await getUsers(cookie);
     setUser(response);
   }, [cookies.accessToken]);
 
+  /* Get services */
   const serviceGet = useCallback(async () => {
     let cookie = {
       accessToken: cookies.accessToken,
@@ -30,6 +57,20 @@ const FormUhS = (props) => {
     const response = await getObjects(cookie);
     setService(response);
   }, [cookies.accessToken]);
+
+  /* Get user to edit */
+  const getUserEdit = useCallback(
+    async (dataU) => {
+      let cookie = { accessToken: cookies.accessToken };
+      const response = await getUser(cookie, dataU);
+      if (response.status) {
+        setDataEditU(response);
+      } else {
+        console.log("something went wrong");
+      }
+    },
+    [cookies.accessToken]
+  );
 
   for (let i = 0; i < user.length; i++) {
     userElement.push({ label: user[i].name, value: user[i].id });
@@ -41,7 +82,7 @@ const FormUhS = (props) => {
 
   const render = () => {
     console.log(dataU);
-    console.log(dataS);
+    getUserEdit(dataU);
   };
 
   useEffect(() => {
@@ -111,33 +152,71 @@ const FormUhS = (props) => {
         />
       </div>
       &ensp;
-      <div className="card">
+      <form onSubmit={formik.handleSubmit} className="p-fluid">
+        <h5>User Has Service</h5>
         <div className="grid p-fluid">
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
                 <i className="pi pi-user"></i>
               </span>
-              <InputText placeholder="Username" />
+              <InputText
+                id="name"
+                name="name"
+                disabled
+                placeholder={dataEditU.name}
+                value={formik.values.name}
+                onChange={formik.handleChange}
+              />
             </div>
           </div>
 
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
-              <span className="p-inputgroup-addon">$</span>
-              <InputNumber placeholder="Price" />
-              <span className="p-inputgroup-addon">.00</span>
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-google" />
+              </span>
+              <InputText
+                type="number"
+                id="mail"
+                name="mail"
+                disabled
+                placeholder={dataEditU.mail}
+                onChange={formik.handleChange}
+              />
             </div>
           </div>
 
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
-              <span className="p-inputgroup-addon">www</span>
-              <InputText placeholder="Website" />
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-pencil" />
+              </span>
+              <InputText
+                id="status"
+                name="status"
+                placeholder={dataEditU.status == true ? "ACTIVE" : "INACTIVE"}
+                onChange={formik.handleChange}
+              />
             </div>
           </div>
         </div>
-      </div>
+        &ensp; &ensp; &ensp; &ensp;
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            label="Success"
+            type="button"
+            className="p-button-rounded p-button-success"
+            onClick={insertedUhS}
+          />
+        </div>
+      </form>
     </div>
   );
 };
