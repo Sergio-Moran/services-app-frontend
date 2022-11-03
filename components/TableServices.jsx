@@ -40,7 +40,7 @@ const TableServices = () => {
   };
 
   const serviceGet = useCallback(async () => {
-    let cookie = { accessToken: cookies.accessToken, table: "tbService" };
+    let cookie = { accessToken: cookies.accessToken, table: "getServiceWithPrices" };
     const response = await getObjects(cookie);
     console.log(response);
     setInfo(response);
@@ -84,6 +84,7 @@ const TableServices = () => {
     };
     let cookie = { accessToken: cookies.accessToken };
     const response = await updateStatus(statusNew, cookie);
+    serviceGet();
     console.log(response);
   };
 
