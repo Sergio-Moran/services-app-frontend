@@ -4,6 +4,8 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useCookies } from "react-cookie";
 import { getObjects, getUsers } from "../routes/api.routes";
+import { InputText } from "primereact/inputtext";
+import { InputNumber } from "primereact/inputnumber";
 
 const FormUhS = (props) => {
   const [user, setUser] = useState("");
@@ -107,6 +109,34 @@ const FormUhS = (props) => {
           aria-label="Filter"
           onClick={render}
         />
+      </div>
+      &ensp;
+      <div className="card">
+        <div className="grid p-fluid">
+          <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-user"></i>
+              </span>
+              <InputText placeholder="Username" />
+            </div>
+          </div>
+
+          <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">$</span>
+              <InputNumber placeholder="Price" />
+              <span className="p-inputgroup-addon">.00</span>
+            </div>
+          </div>
+
+          <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">www</span>
+              <InputText placeholder="Website" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
