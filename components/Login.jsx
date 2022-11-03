@@ -63,7 +63,7 @@ const Login = () => {
       const accessToken = result.access_token;
       setCookie("accessToken", accessToken, { path: "/" });
       setCookie("userId", result.user_id, { path: "/" });
-      returnUrl = "/menu";
+      returnUrl = "/dashboard";
     } else {
       formik.resetForm();
       returnUrl = "/";
