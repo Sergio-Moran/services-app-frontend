@@ -169,11 +169,7 @@ const FormUhS = (props) => {
   }, []);
 
   return (
-    <div
-      style={{
-        height: "75vh",
-      }}
-    >
+    <div>
       <div
         style={{
           display: "flex",
@@ -233,12 +229,6 @@ const FormUhS = (props) => {
           justifyContent: "center",
         }}
       >
-        {/* <Button
-          icon="pi pi-times"
-          className="p-button-rounded p-button-danger"
-          aria-label="Cancel"
-          onClick={desRender}
-        /> */}
         <Button
           icon="pi pi-check"
           className="p-button-rounded"
