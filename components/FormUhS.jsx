@@ -10,7 +10,6 @@ import {
   getUsers,
 } from "../routes/api.routes";
 import { InputText } from "primereact/inputtext";
-import { InputNumber } from "primereact/inputnumber";
 import { useFormik } from "formik";
 
 const FormUhS = (props) => {
