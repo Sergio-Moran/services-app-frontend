@@ -90,7 +90,7 @@ const DoughnutChart = () => {
             style={{ justifyContent: "center" }}
           >
             <Chart
-              type="polarArea"
+              type="doughnut"
               data={chartData}
               options={lightOptions}
               style={{ width: "35%", justifyContent: "center" }}
@@ -100,7 +100,7 @@ const DoughnutChart = () => {
       </Sidebar>
       <Card header={headerMin} footer={footer}>
         <div className="card flex justify-content-center">
-          <Chart type="polarArea" data={chartData} options={lightOptions} />
+          <Chart type="doughnut" data={chartData} options={lightOptions} />
         </div>
       </Card>
     </>

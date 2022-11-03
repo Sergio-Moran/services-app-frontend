@@ -32,7 +32,7 @@ const dashboard = () => {
         </div>
       </div>
       <div style={{ flexGrow: 2 }}>
-        <StackedChart />
+        <DoughnutChart />
       </div>
     </Layout>
   );
