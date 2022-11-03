@@ -1,9 +1,7 @@
 import { Menubar } from "primereact/menubar";
-import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import React, { useEffect, useRef } from "react";
-import { Messages } from "primereact/messages";
+import React from "react";
 import { Message } from "primereact/message";
 import Link from "next/link";
 
@@ -61,34 +59,9 @@ const Layout = ({ children }) => {
       ],
     },
     {
-      label: "Events",
-      icon: "pi pi-fw pi-calendar",
-      items: [
-        {
-          label: "Edit",
-          icon: "pi pi-fw pi-pencil",
-          items: [
-            {
-              label: "Save",
-              icon: "pi pi-fw pi-calendar-plus",
-            },
-            {
-              label: "Delete",
-              icon: "pi pi-fw pi-calendar-minus",
-            },
-          ],
-        },
-        {
-          label: "Archieve",
-          icon: "pi pi-fw pi-calendar-times",
-          items: [
-            {
-              label: "Remove",
-              icon: "pi pi-fw pi-calendar-minus",
-            },
-          ],
-        },
-      ],
+      label: "Roles",
+      icon: "pi pi-fw pi-users",
+      url: "/role"
     },
     /* {
       label: "Quit",
