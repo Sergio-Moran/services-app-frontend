@@ -1,13 +1,13 @@
 import { Menubar } from "primereact/menubar";
-import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
-import { Messages } from "primereact/messages";
 import { Message } from "primereact/message";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { getRole } from "../../routes/api.routes";
+import { closeSession } from "../../routes/api.routes";
+import { useRouter } from "next/router";
 
 const Layout = ({ children }) => {
   const [cookies] = useCookies(["accessToken", "userId"]);
@@ -65,34 +65,9 @@ const Layout = ({ children }) => {
       ],
     },
     {
-      label: "Events",
-      icon: "pi pi-fw pi-calendar",
-      items: [
-        {
-          label: "Edit",
-          icon: "pi pi-fw pi-pencil",
-          items: [
-            {
-              label: "Save",
-              icon: "pi pi-fw pi-calendar-plus",
-            },
-            {
-              label: "Delete",
-              icon: "pi pi-fw pi-calendar-minus",
-            },
-          ],
-        },
-        {
-          label: "Archieve",
-          icon: "pi pi-fw pi-calendar-times",
-          items: [
-            {
-              label: "Remove",
-              icon: "pi pi-fw pi-calendar-minus",
-            },
-          ],
-        },
-      ],
+      label: "Roles",
+      icon: "pi pi-fw pi-users",
+      url: "/role",
     },
   ]);
 
@@ -103,14 +78,9 @@ const Layout = ({ children }) => {
       icon: "pi pi-fw pi-credit-card",
       items: [
         {
-          label: "New",
-          icon: "pi pi-fw pi-plus",
-          url: "/service",
-        },
-        {
           label: "List",
           icon: "pi pi-fw pi-bars",
-          url: "/menuService",
+          url: "/menuServiceUser",
         },
         {
           separator: true,
@@ -118,42 +88,7 @@ const Layout = ({ children }) => {
         {
           label: "User has Service",
           icon: "pi pi-folder",
-          url: "/tableUhS",
-        },
-      ],
-    },
-    {
-      label: "Pay",
-      icon: "pi pi-fw pi-money-bill",
-      url: "/pay",
-    },
-    {
-      label: "Events",
-      icon: "pi pi-fw pi-calendar",
-      items: [
-        {
-          label: "Edit",
-          icon: "pi pi-fw pi-pencil",
-          items: [
-            {
-              label: "Save",
-              icon: "pi pi-fw pi-calendar-plus",
-            },
-            {
-              label: "Delete",
-              icon: "pi pi-fw pi-calendar-minus",
-            },
-          ],
-        },
-        {
-          label: "Archieve",
-          icon: "pi pi-fw pi-calendar-times",
-          items: [
-            {
-              label: "Remove",
-              icon: "pi pi-fw pi-calendar-minus",
-            },
-          ],
+          url: "/tableUhSUser",
         },
       ],
     },
@@ -177,6 +112,16 @@ const Layout = ({ children }) => {
   const dash = () => {
     <Link></Link>;
   };
+  const router = useRouter();
+
+  const closeActualSession = async () => {
+    let cookie = { accessToken: cookies.accessToken };
+    const response = await closeSession(cookie);
+    if (response.status) {
+      router.push("/");
+    }
+    console.log(response);
+  };
 
   const start = (
     <Link href="/dashboard">
@@ -191,6 +136,7 @@ const Layout = ({ children }) => {
       icon="pi pi-times"
       className="p-button-rounded p-button-secondary p-button-text"
       aria-label="Cancel"
+      onClick={closeActualSession}
     />
   );
 

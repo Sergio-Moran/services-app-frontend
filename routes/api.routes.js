@@ -132,7 +132,6 @@ export const getEntityById = async (data) => {
 };
 
 export const getRole = async (data) => {
-  console.log(data);
   const response = await fetch(`${ROUTE}/getRole/${data.id}`, {
     method: "GET",
     credentials: "include",
@@ -202,5 +201,52 @@ export const insertPaymentRecord = async (data) => {
     body: JSON.stringify(data),
   });
 
+  return await response.json();
+};
+
+/* Function for user has role */
+export const insertUserHasRole = async (data) => {
+  const response = await fetch(`${ROUTE}/insertUserHasRole`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await response.json();
+};
+
+/* Function for role has permission */
+export const insertRoleHasPermission = async (data) => {
+  const response = await fetch(`${ROUTE}/insertRoleHasPermission`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await response.json();
+};
+
+export const closeSession = async (data) => {
+  const response = await fetch(`${ROUTE}/closeSession`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+  });
   return await response.json();
 };
