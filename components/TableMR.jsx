@@ -13,7 +13,7 @@ import { Toast } from "primereact/toast";
 import ModalUhS from "./ModalUhS";
 import { useRouter } from "next/router";
 
-const TableUhS = () => {
+const TableMR = () => {
   const router = useRouter();
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);
@@ -80,7 +80,7 @@ const TableUhS = () => {
   };
 
   const goForm = () => {
-    router.push("/formUhS");
+    router.push("/formPayService");
   };
 
   const empty = () => {
@@ -109,7 +109,7 @@ const TableUhS = () => {
     const statusNew = {
       id: props.id,
       condition: false,
-      table_name: "tbUserHasService",
+      table_name: "tbPaymentRecord",
     };
     let cookie = { accessToken: cookies.accessToken };
     const response = await updateStatus(statusNew, cookie);
@@ -139,7 +139,7 @@ const TableUhS = () => {
 
   const header = (
     <div className="table-header">
-      User has Services
+      Payment Recod
       <div
         style={{
           display: "flex",
@@ -167,6 +167,9 @@ const TableUhS = () => {
           <Column field="description" header="Comment"></Column>
           <Column field="user_name" header="Customer"></Column>
           <Column field="method_name" header="Payment Method"></Column>
+          <Column field="payments" header="Payments"></Column>
+          <Column field="period" header="Payment Period (days)"></Column>
+          <Column field="interest" header="Interest"></Column>
           <Column field="" header="Actions" body={codeEditor}></Column>
         </DataTable>
 
@@ -186,4 +189,4 @@ const TableUhS = () => {
   );
 };
 
-export default TableUhS;
+export default TableMR;

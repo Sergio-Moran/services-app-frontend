@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
   const items = [
     {
       label: "Services",
-      icon: "pi pi-fw pi-file",
+      icon: "pi pi-fw pi-credit-card",
       items: [
         {
           label: "New",

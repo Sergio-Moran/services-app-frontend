@@ -4,14 +4,14 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import Layout from "../components/Layouts/Layout";
-import TableMR from "../components/TableMR";
+import FormPayServices from "../components/FormPayServices";
 
-const pay = () => {
+const formPayService = () => {
   return (
     <Layout>
-      <TableMR />
+      <FormPayServices />
     </Layout>
-  )
-}
+  );
+};
 
-export default pay
+export default formPayService;

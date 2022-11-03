@@ -10,7 +10,7 @@ import FormUhS from "../components/FormUhS";
 const formUhS = () => {
   return (
 <Layout>
-    <FormUhS></FormUhS>
+    <FormUhS />
 </Layout>
   )
 }
