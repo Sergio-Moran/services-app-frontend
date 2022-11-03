@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, React } from "react";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -9,6 +9,8 @@ import DoughnutChart from "../components/DChart.jsx";
 import StackedChart from "../components/StackedChart";
 import PolarChart from "../components/PolarChart";
 import PieChart from "../components/PieChart";
+import { Sidebar } from "primereact/sidebar";
+import { Button } from "primereact/button";
 
 const dashboard = () => {
   return (
@@ -20,7 +22,7 @@ const dashboard = () => {
         }}
       >
         <div style={{ flexGrow: 2 }}>
-          <DoughnutChart  />
+          <DoughnutChart />
         </div>
         <div style={{ flexGrow: 2 }}>
           <PieChart />
