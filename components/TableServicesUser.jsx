@@ -3,13 +3,19 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import "../public/css/Table.module.css";
-import { getUsers, getUser, updateStatus } from "../routes/api.routes";
+import {
+  getUsers,
+  getUser,
+  updateStatus,
+  getObjects,
+  getEntityById,
+} from "../routes/api.routes";
 import { useCookies } from "react-cookie";
 import { Dialog } from "primereact/dialog";
-import Modal from "./Modal";
 import { Toast } from "primereact/toast";
+import ModalService from "./ModalService";
 
-const Table = () => {
+const TableServicesUser = () => {
   const [displayResponsive, setDisplayResponsive] = useState(false);
   const [position, setPosition] = useState("center");
   const [cookies, setCookie] = useCookies(["accessToken"]);
@@ -33,17 +39,39 @@ const Table = () => {
     dialogFuncMap[`${name}`](false);
   };
 
-  const userGet = useCallback(async () => {
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await getUsers(cookie);
+  const serviceGet = useCallback(async () => {
+    let cookie = {
+      accessToken: cookies.accessToken,
+      table: "getServiceWithPrices",
+    };
+    const response = await getObjects(cookie);
     console.log(response);
     setInfo(response);
   }, [cookies.accessToken]);
 
-  const getUserEdit = useCallback(async (props) => {
-    let cookie = { accessToken: cookies.accessToken };
-    const response = await getUser(cookie, props.id);
-    if (response.status) {
+  const getServiceEdit = useCallback(async (props) => {
+    let dataService = {
+      accessToken: cookies.accessToken,
+      table: "tbService",
+      id: props.id,
+    };
+    let dataPrice = {
+      accessToken: cookies.accessToken,
+      table: "tbServicePrice",
+      id: props.idPrice,
+    };
+    const resService = await getEntityById(dataService);
+    const resPrice = await getEntityById(dataPrice);
+    console.log(resService);
+    console.log(resPrice);
+    if (resService.status && resPrice.status) {
+      const response = {
+        idService: resService.id,
+        idPrice: resPrice.id,
+        nameService: resService.name,
+        price: resPrice.price,
+        descriptionService: resService.description,
+      };
       setResponses(response);
       onClick("displayResponsive");
     } else {
@@ -52,9 +80,14 @@ const Table = () => {
   }, []);
 
   const updatedStatus = async (props) => {
-    const statusNew = { id: props.id, condition: false, table_name: "tbUser" };
+    const statusNew = {
+      id: props.id,
+      condition: false,
+      table_name: "tbService",
+    };
     let cookie = { accessToken: cookies.accessToken };
     const response = await updateStatus(statusNew, cookie);
+    serviceGet();
     console.log(response);
   };
 
@@ -84,9 +117,8 @@ const Table = () => {
       life: 3000,
     });
   };
-
   useEffect(() => {
-    userGet();
+    serviceGet();
   }, []);
 
   const renderFooter = (name) => {
@@ -109,7 +141,7 @@ const Table = () => {
         <Button
           className="p-button-info"
           icon="pi pi-pencil"
-          onClick={() => getUserEdit(props)}
+          onClick={() => getServiceEdit(props)}
         />
         &ensp;
         <Button
@@ -127,7 +159,7 @@ const Table = () => {
 
   const header = (
     <div className="table-header">
-      Users
+      Services
       <div
         style={{
           display: "flex",
@@ -135,7 +167,7 @@ const Table = () => {
           justifyContent: "end",
         }}
       >
-        <Button onClick={userGet} icon="pi pi-refresh" />
+        <Button onClick={serviceGet} icon="pi pi-refresh" />
       </div>
     </div>
   );
@@ -144,38 +176,34 @@ const Table = () => {
     <>
       <div
         style={{
-          w: "auto",
+          height: "auto",
         }}
       >
         <div className="datatable-templating-demo">
           <div className="card">
-            <DataTable
-              scrollable
-              scrollHeight="420px"
-              value={info}
-              header={header}
-              responsiveLayout="scroll"
-            >
+            <DataTable scrollable scrollHeight="420px"  value={info} header={header} responsiveLayout="scroll">
               <Column sortable field="id" header="Cod."></Column>
-              <Column sortable field="name" header="Name"></Column>
-              <Column sortable field="mail" header="Email"></Column>
-              <Column field="" header="Actions" body={codeEditor}></Column>
+              <Column sortable field="name" header="Service Name"></Column>
+              <Column sortable field="price" header="Price"></Column>
+              <Column sortable field="description" header="Description"></Column>
             </DataTable>
 
             <Toast ref={toast} />
             <Dialog
-              header="Header"
+              header="Services"
               visible={displayResponsive}
               onHide={() => onHide("displayResponsive")}
               breakpoints={{ "960px": "75vw" }}
               style={{ width: "50vw" }}
               footer={renderFooter("displayResponsive")}
             >
-              <Modal
-                id={responses.id}
-                name={responses.name}
-                mail={responses.mail}
-                userGet={userGet}
+              <ModalService
+                idService={responses.idService}
+                idPrice={responses.idPrice}
+                nameService={responses.nameService}
+                price={responses.price}
+                descriptionService={responses.descriptionService}
+                serviceGet={serviceGet}
                 onHide={onHide}
                 accept={accept}
                 reject={reject}
@@ -189,4 +217,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default TableServicesUser;

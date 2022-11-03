@@ -1,17 +1,18 @@
 import React from "react";
-import Table from "../components/Table";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import Layout from "../components/Layouts/Layout";
+import FormUhS from "../components/FormUhS";
 
-const table = () => {
+
+const formUhS = () => {
   return (
-    <Layout>
-      <Table />
-    </Layout>
-  );
-};
+<Layout>
+    <FormUhS />
+</Layout>
+  )
+}
 
-export default table;
+export default formUhS

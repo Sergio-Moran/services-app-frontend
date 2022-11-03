@@ -1,17 +1,17 @@
 import React from "react";
-import Table from "../components/Table";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import Layout from "../components/Layouts/Layout";
+import FormPayServices from "../components/FormPayServices";
 
-const table = () => {
+const formPayService = () => {
   return (
     <Layout>
-      <Table />
+      <FormPayServices />
     </Layout>
   );
 };
 
-export default table;
+export default formPayService;

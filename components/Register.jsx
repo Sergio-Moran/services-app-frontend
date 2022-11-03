@@ -2,29 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { Dropdown } from "primereact/dropdown";
-import { Calendar } from "primereact/calendar";
 import { Password } from "primereact/password";
-import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 import { Divider } from "primereact/divider";
 import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import "../public/css/Form.module.css";
+import { useCookies } from "react-cookie";
+import { insertUser } from "../routes/api.routes";
+import { useRouter } from "next/router";
 
 const Register = () => {
-  const [countries, setCountries] = useState([]);
+  const router = useRouter();
   const [showMessage, setShowMessage] = useState(false);
   const [formData, setFormData] = useState({});
 
   const formik = useFormik({
     initialValues: {
       name: "",
-      email: "",
+      mail: "",
       password: "",
-      date: null,
-      country: null,
-      accept: false,
     },
     validate: (data) => {
       let errors = {};
@@ -33,12 +30,12 @@ const Register = () => {
         errors.name = "Name is required.";
       }
 
-      if (!data.email) {
-        errors.email = "Email is required.";
+      if (!data.mail) {
+        errors.mail = "mail is required.";
       } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.mail)
       ) {
-        errors.email = "Invalid email address. E.g. example@email.com";
+        errors.mail = "Invalid mail address. E.g. example@mail.com";
       }
 
       if (!data.password) {
@@ -53,11 +50,29 @@ const Register = () => {
     },
     onSubmit: (data) => {
       setFormData(data);
-      setShowMessage(true);
-
-      formik.resetForm();
     },
   });
+
+  const [cookies, setCookie] = useCookies(["accessToken"]);
+
+  const userInsert = async () => {
+    const newUser = {
+      name: formik.values.name,
+      mail: formik.values.mail,
+      password: formik.values.password,
+      accessToken: cookies.accessToken,
+    };
+    const result = await insertUser(newUser);
+    let returnUrl = "";
+    console.log(result);
+    if (result.status) {
+      returnUrl = "/menu";
+    } else {
+      formik.resetForm();
+      returnUrl = "/register";
+    }
+    router.push(returnUrl);
+  };
 
   const isFormFieldValid = (name) =>
     !!(formik.touched[name] && formik.errors[name]);
@@ -100,7 +115,7 @@ const Register = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh",
+          height: "75vh",
         }}
       >
         <Card title="Register" style={{ width: "25rem", marginBottom: "2em" }}>
@@ -114,18 +129,6 @@ const Register = () => {
               breakpoints={{ "960px": "80vw" }}
               style={{ width: "30vw" }}
             >
-              <div className="flex align-items-center flex-column pt-6 px-3">
-                <i
-                  className="pi pi-check-circle"
-                  style={{ fontSize: "5rem", color: "var(--green-500)" }}
-                ></i>
-                <h5>Registration Successful!</h5>
-                <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
-                  Your account is registered under name <b>{formData.name}</b>{" "}
-                  ;be valid next 30 days without activation. Please check{" "}
-                  <b>{formData.email}</b> for activation instructions.
-                </p>
-              </div>
             </Dialog>
 
             <div className="flex justify-content-center">
@@ -161,24 +164,24 @@ const Register = () => {
                     <span className="p-float-label p-input-icon-right">
                       <i className="pi pi-envelope" />
                       <InputText
-                        id="email"
-                        name="email"
-                        value={formik.values.email}
+                        id="mail"
+                        name="mail"
+                        value={formik.values.mail}
                         onChange={formik.handleChange}
                         className={classNames({
-                          "p-invalid": isFormFieldValid("email"),
+                          "p-invalid": isFormFieldValid("mail"),
                         })}
                       />
                       <label
-                        htmlFor="email"
+                        htmlFor="mail"
                         className={classNames({
-                          "p-error": isFormFieldValid("email"),
+                          "p-error": isFormFieldValid("mail"),
                         })}
                       >
-                        Email*
+                        mail*
                       </label>
                     </span>
-                    {getFormErrorMessage("email")}
+                    {getFormErrorMessage("mail")}
                     <br></br>
                     <br></br>
                   </div>
@@ -206,47 +209,14 @@ const Register = () => {
                       </label>
                     </span>
                     {getFormErrorMessage("password")}
-                    <br></br>
-                    <br></br>
-                  </div>
-                  <div className="field">
-                    <span className="p-float-label">
-                      <Calendar
-                        id="date"
-                        name="date"
-                        value={formik.values.date}
-                        onChange={formik.handleChange}
-                        dateFormat="dd/mm/yy"
-                        mask="99/99/9999"
-                        showIcon
-                      />
-                      <label htmlFor="date">Birthday</label>
-                    </span>
                   </div>
                   <br></br>
-                  <br></br>
-                  <div className="field-checkbox">
-                    <Checkbox
-                      inputId="accept"
-                      name="accept"
-                      checked={formik.values.accept}
-                      onChange={formik.handleChange}
-                      className={classNames({
-                        "p-invalid": isFormFieldValid("accept"),
-                      })}
-                    />
-                    <label
-                      htmlFor="accept"
-                      className={classNames({
-                        "p-error": isFormFieldValid("accept"),
-                      })}
-                    >
-                      I agree to the terms and conditions*
-                    </label>
-                  </div>
-                  <br></br>
-
-                  <Button type="submit" label="Submit" className="mt-2" />
+                  <Button
+                    type="submit"
+                    onClick={userInsert}
+                    label="Submit"
+                    className="mt-2"
+                  />
                 </form>
               </div>
             </div>
