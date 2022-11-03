@@ -52,7 +52,7 @@ const Login = () => {
     );
   };
 
-  const [cookies, setCookie] = useCookies(["accessToken"]);
+  const [cookies, setCookie] = useCookies(["accessToken", "userId"]);
 
   const user = async () => {
     const user = { mail: formik.values.mail, password: formik.values.password };
@@ -62,6 +62,7 @@ const Login = () => {
     if (result.status) {
       const accessToken = result.access_token;
       setCookie("accessToken", accessToken, { path: "/" });
+      setCookie("userId", result.user_id, { path: "/" });
       returnUrl = "/menu";
     } else {
       formik.resetForm();

@@ -131,6 +131,20 @@ export const getEntityById = async (data) => {
   return await response.json();
 };
 
+export const getRole = async (data) => {
+  console.log(data);
+  const response = await fetch(`${ROUTE}/getRole/${data.id}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+  });
+  return await response.json();
+};
+
 export const updateEntity = async (body, data) => {
   const response = await fetch(`${ROUTE}/update${data.table}`, {
     method: "PUT",
@@ -154,8 +168,8 @@ export const getCountStatus = async (data) => {
       "x-access-token": data.accessToken,
     },
   });
-  
-  return await response.json(); 
+
+  return await response.json();
 };
 /* Function for user has service */
 export const insertUserHasService = async (data) => {
