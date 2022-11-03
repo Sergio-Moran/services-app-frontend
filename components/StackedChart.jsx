@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { Chart } from "primereact/chart";
+import { useCookies } from "react-cookie";
+import { Card } from "primereact/card";
+import { Sidebar } from "primereact/sidebar";
+import { Button } from "primereact/button";
 
 const StackedChart = () => {
-  const [stackedData] = useState({
+  const [visibleFullScreen, setVisibleFullScreen] = useState(false);
+  const [cookies] = useCookies(["accessToken"]);
+  const [stackedData, setStackedData] = useState({
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
       {
@@ -15,7 +21,7 @@ const StackedChart = () => {
         type: "bar",
         label: "Dataset 2",
         backgroundColor: "#66BB6A",
-        data: [21, 84, 24, 75, 37, 65, 34],
+        data: [0, 84, 24, 75, 37, 65, 34],
       },
       {
         type: "bar",
@@ -68,13 +74,19 @@ const StackedChart = () => {
 
   const { stackedOptions } = getLightTheme();
 
-  return (
-    <div>
-      <div className="card">
-        <h5>Stacked</h5>
-        <Chart type="bar" data={stackedData} options={stackedOptions} />
-      </div>
+  const headerMin = (
+    <div className="flex justify-content-center">
+      <h5>Estado de los Servicios</h5>
     </div>
+  );
+  return (
+    <>
+      <Card header={headerMin}>
+        <div className="card">
+          <Chart type="bar" data={stackedData} options={stackedOptions} />
+        </div>
+      </Card>
+    </>
   );
 };
 

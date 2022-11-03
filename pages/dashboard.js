@@ -22,20 +22,17 @@ const dashboard = () => {
         }}
       >
         <div style={{ flexGrow: 2 }}>
-          <DoughnutChart />
-        </div>
-        <div style={{ flexGrow: 2 }}>
           <PieChart />
         </div>
         <div style={{ flexGrow: 2 }}>
           <DoughnutChart />
         </div>
         <div style={{ flexGrow: 2 }}>
-          <PieChart />
+          <DoughnutChart />
         </div>
-        <div style={{ flexGrow: 2 }}>
-          <StackedChart />
-        </div>
+      </div>
+      <div style={{ flexGrow: 2 }}>
+        <StackedChart />
       </div>
     </Layout>
   );

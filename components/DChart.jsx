@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Chart } from "primereact/chart";
 import { Card } from "primereact/card";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
+import { getObjects } from "../routes/api.routes";
+import { useCookies } from "react-cookie";
 
 const DoughnutChart = () => {
   const [visibleFullScreen, setVisibleFullScreen] = useState(false);
-  const [chartData] = useState({
+  const [cookies] = useCookies(["accessToken"]);
+  const [chartData, setCharData] = useState({
     labels: ["A", "B", "C"],
     datasets: [
       {
@@ -16,7 +19,35 @@ const DoughnutChart = () => {
       },
     ],
   });
+  const query = async () => {
+    let data = {
+      accessToken: cookies.accessToken,
+      table: "reportAmountUserService",
+    };
+    const response = await getObjects(data);
+    console.log(response.map);
+    let dataset = [];
+    let label = [];
+    for (let i = 0; i < response.length; i++) {
+      label.push(response[i].name);
+      dataset.push(response[i].total);
+    }
+    let charData = {
+      labels: label,
+      datasets: [
+        {
+          data: dataset,
+          backgroundColor: ["#42A5F5", "#66BB6A", "#FFA726"],
+          hoverBackgroundColor: ["#64B5F6", "#81C784", "#FFB74D"],
+        },
+      ],
+    };
+    setCharData(charData);
+  };
 
+  useEffect(() => {
+    query();
+  }, []);
   const [lightOptions] = useState({
     plugins: {
       legend: {
@@ -38,12 +69,12 @@ const DoughnutChart = () => {
 
   const header = (
     <div className="flex justify-content-center">
-      <h1>Hola Mundo</h1>
+      <h1>Cantidad de Servicios por Usuario</h1>
     </div>
   );
   const headerMin = (
     <div className="flex justify-content-center">
-      <h5>Hola Mundo</h5>
+      <h5>Cantidad de Servicios por Usuario</h5>
     </div>
   );
   return (
@@ -59,7 +90,7 @@ const DoughnutChart = () => {
             style={{ justifyContent: "center" }}
           >
             <Chart
-              type="doughnut"
+              type="polarArea"
               data={chartData}
               options={lightOptions}
               style={{ width: "35%", justifyContent: "center" }}
@@ -69,7 +100,7 @@ const DoughnutChart = () => {
       </Sidebar>
       <Card header={headerMin} footer={footer}>
         <div className="card flex justify-content-center">
-          <Chart type="doughnut" data={chartData} options={lightOptions} />
+          <Chart type="polarArea" data={chartData} options={lightOptions} />
         </div>
       </Card>
     </>
