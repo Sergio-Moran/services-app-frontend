@@ -3,45 +3,50 @@ import { ListBox } from "primereact/listbox";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useCookies } from "react-cookie";
-import { getUsers } from "../routes/api.routes";
+import { getObjects, getUsers } from "../routes/api.routes";
 
 const FormUhS = (props) => {
   const [user, setUser] = useState("");
+  const [dataU, setDataU] = useState("");
+  const [dataS, setDataS] = useState("");
   const [service, setService] = useState("");
   const [cookies, setCookie] = useCookies(["accessToken"]);
+  let userElement = [];
+  let serviceElement = [];
 
   const userGet = useCallback(async () => {
     let cookie = { accessToken: cookies.accessToken };
     const response = await getUsers(cookie);
-    /* console.log(response); */
     setUser(response);
   }, [cookies.accessToken]);
 
-  const userList = [
-    { label: "New York", value: "NY" },
-    { label: "Rome", value: "RM" },
-    { label: "London", value: "LDN" },
-    { label: "Istanbul", value: "IST" },
-    { label: "Paris", value: "PRS" },
-  ];
+  const serviceGet = useCallback(async () => {
+    let cookie = {
+      accessToken: cookies.accessToken,
+      table: "getServiceWithPrices",
+    };
+    const response = await getObjects(cookie);
+    setService(response);
+  }, [cookies.accessToken]);
 
-  const serviceList = [
-    { label: "New York", value: "NY" },
-    { label: "Rome", value: "RM" },
-    { label: "London", value: "LDN" },
-    { label: "Istanbul", value: "IST" },
-    { label: "Paris", value: "PRS" },
-  ];
+  for (let i = 0; i < user.length; i++) {
+    userElement.push({ label: user[i].name, value: user[i].id });
+  }
+
+  for (let i = 0; i < service.length; i++) {
+    serviceElement.push({ label: service[i].name, value: service[i].id });
+  }
 
   const render = () => {
-/*     console.log(user);
-    console.log(service); */
+    console.log(dataU);
+    console.log(dataS);
   };
 
   useEffect(() => {
     userGet();
+    serviceGet();
   }, []);
-console.log(user);
+
   return (
     <div
       style={{
@@ -63,9 +68,9 @@ console.log(user);
           }}
         >
           <ListBox
-            value={user}
-            options={userList}
-            onChange={(e) => setUser(e.value)}
+            value={dataU}
+            options={userElement}
+            onChange={(e) => setDataU(e.value)}
             listStyle={{ maxHeight: "250px" }}
           />
         </Card>
@@ -76,9 +81,9 @@ console.log(user);
           }}
         >
           <ListBox
-            value={service}
-            options={serviceList}
-            onChange={(e) => setService(e.value)}
+            value={dataS}
+            options={serviceElement}
+            onChange={(e) => setDataS(e.value)}
             listStyle={{ maxHeight: "250px" }}
           />
         </Card>
