@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import { Card } from "primereact/card";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
+import randomColor from "randomcolor";
 
 const StackedChart = () => {
   const [visibleFullScreen, setVisibleFullScreen] = useState(false);

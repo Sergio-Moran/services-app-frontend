@@ -5,6 +5,7 @@ import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { getObjects } from "../routes/api.routes";
 import { useCookies } from "react-cookie";
+import randomColor from "randomcolor";
 
 const DoughnutChartService = () => {
   const [visibleFullScreen, setVisibleFullScreen] = useState(false);
@@ -34,22 +35,18 @@ const DoughnutChartService = () => {
     console.log(response.map);
     let dataset = [];
     let label = [];
+    let colors = [];
     for (let i = 0; i < response.length; i++) {
       label.push(response[i].name);
       dataset.push(response[i].total);
+      colors.push(randomColor());
     }
     let charData = {
       labels: label,
       datasets: [
         {
           data: dataset,
-          backgroundColor: [
-            "#42A5F5",
-            "#66BB6A",
-            "#FFA726",
-            "#26C6DA",
-            "#7E57C2",
-          ],
+          backgroundColor: colors,
         },
       ],
     };
