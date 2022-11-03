@@ -3,7 +3,12 @@ import { ListBox } from "primereact/listbox";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useCookies } from "react-cookie";
-import { getObjects, getUser, getUsers } from "../routes/api.routes";
+import {
+  getEntityById,
+  getObjects,
+  getUser,
+  getUsers,
+} from "../routes/api.routes";
 import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 import { useFormik } from "formik";
@@ -72,17 +77,52 @@ const FormUhS = (props) => {
     [cookies.accessToken]
   );
 
+  /* Get service and price */
+  const getServiceEdit = useCallback(
+    async (dataS) => {
+      let dataPrice = {
+        accessToken: cookies.accessToken,
+        table: "tbServicePrice",
+        id: dataS,
+      };
+      const resPrice = await getEntityById(dataPrice);
+
+      let dataService = {
+        accessToken: cookies.accessToken,
+        table: "tbService",
+        id: resPrice.service_id,
+      };
+      const resService = await getEntityById(dataService);
+
+      console.log(resService);
+      console.log(resPrice);
+      if (resService.status && resPrice.status) {
+        const response = {
+          idService: resService.id,
+          idPrice: resPrice.id,
+          nameService: resService.name,
+          price: resPrice.price,
+          descriptionService: resService.description,
+        };
+        setDataEditS(response);
+      } else {
+        console.log("something went wrong");
+      }
+    },
+    [cookies.accessToken]
+  );
+
   for (let i = 0; i < user.length; i++) {
     userElement.push({ label: user[i].name, value: user[i].id });
   }
 
   for (let i = 0; i < service.length; i++) {
-    serviceElement.push({ label: service[i].name, value: service[i].id });
+    serviceElement.push({ label: service[i].name, value: service[i].idPrice });
   }
 
   const render = () => {
-    console.log(dataU);
     getUserEdit(dataU);
+    getServiceEdit(dataS);
   };
 
   useEffect(() => {
@@ -154,6 +194,53 @@ const FormUhS = (props) => {
       &ensp;
       <form onSubmit={formik.handleSubmit} className="p-fluid">
         <h5>User Has Service</h5>
+        <div className="grid p-fluid">
+          <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-user"></i>
+              </span>
+              <InputText
+                id="name"
+                name="name"
+                disabled
+                placeholder={dataEditU.name}
+                value={formik.values.name}
+                onChange={formik.handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-google" />
+              </span>
+              <InputText
+                type="number"
+                id="mail"
+                name="mail"
+                disabled
+                placeholder={dataEditU.mail}
+                onChange={formik.handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="col-12 md:col-4">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-pencil" />
+              </span>
+              <InputText
+                id="status"
+                name="status"
+                placeholder={dataEditU.status == true ? "ACTIVE" : "INACTIVE"}
+                onChange={formik.handleChange}
+              />
+            </div>
+          </div>
+        </div>
         <div className="grid p-fluid">
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
