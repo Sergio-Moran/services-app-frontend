@@ -71,12 +71,12 @@ const DoughnutChartMethod = () => {
 
   const header = (
     <div className="flex justify-content-center">
-      <h1>Cantidad de Servicios por Metodo de Pago</h1>
+      <h1>Cantidad de Metodos de Pago por Servicios</h1>
     </div>
   );
   const headerMin = (
     <div className="flex justify-content-center">
-      <h5>Cantidad de Usuarios por Metodo de Pago</h5>
+      <h5>Cantidad de Metodos de Pago por Servicios</h5>
     </div>
   );
   return (

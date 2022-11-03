@@ -13,6 +13,7 @@ import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import DoughnutChartService from "../components/DChartService";
 import DoughnutChartMethod from "../components/DChartMethod";
+import BarChar from "../components/BarChar";
 
 const dashboard = () => {
   return (
@@ -47,6 +48,9 @@ const dashboard = () => {
 
       <div style={{ flexGrow: 2 }}>
         <StackedChart />
+      </div>
+      <div style={{ flexGrow: 2 }}>
+        <BarChar />
       </div>
     </Layout>
   );
