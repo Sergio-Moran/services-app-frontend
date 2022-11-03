@@ -8,6 +8,7 @@ import {
   getObjects,
   getUser,
   getUsers,
+  insertUserHasService,
 } from "../routes/api.routes";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
@@ -42,15 +43,18 @@ const FormUhS = (props) => {
 
   /* Insert data */
   const insertedUhS = async () => {
-    const newUhS= {
+    const newUhS = {
       service_id: dataS,
       description: formik.values.description,
       user_id: dataU,
       method_id: dataM,
       accessToken: cookies.accessToken,
     };
-    console.log(newUhS);
-    /* formik.resetForm(); */
+    const response = await insertUserHasService(newUhS);
+    if (response.status) {
+      formik.resetForm();
+    }
+    console.log(response);
   };
 
   /* Get users */
