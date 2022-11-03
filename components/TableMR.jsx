@@ -13,7 +13,7 @@ import { Toast } from "primereact/toast";
 import ModalUhS from "./ModalUhS";
 import { useRouter } from "next/router";
 
-const TableUhS = () => {
+const TableMR = () => {
   const router = useRouter();
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [info, setInfo] = useState([]);
@@ -28,7 +28,7 @@ const TableUhS = () => {
   const userHasServiceGet = useCallback(async () => {
     let cookie = {
       accessToken: cookies.accessToken,
-      table: "getUserHasService",
+      table: "reportPaymentRecord",
     };
     const response = await getObjects(cookie);
     console.log(response);
@@ -38,7 +38,7 @@ const TableUhS = () => {
   const getUhS = useCallback(async (props) => {
     let cookie = {
       accessToken: cookies.accessToken,
-      table: "getUserHasService",
+      table: "reportPaymentRecord",
     };
     const response = await getObjects(cookie);
     if (response.status) {
@@ -80,7 +80,7 @@ const TableUhS = () => {
   };
 
   const goForm = () => {
-    router.push("/formUhS");
+    router.push("/formPayService");
   };
 
   const empty = () => {
@@ -109,7 +109,7 @@ const TableUhS = () => {
     const statusNew = {
       id: props.id,
       condition: false,
-      table_name: "tbUserHasService",
+      table_name: "tbPaymentRecord",
     };
     let cookie = { accessToken: cookies.accessToken };
     const response = await updateStatus(statusNew, cookie);
@@ -139,7 +139,7 @@ const TableUhS = () => {
 
   const header = (
     <div className="table-header">
-      User has Services
+      Payment Recod
       <div
         style={{
           display: "flex",
@@ -161,12 +161,15 @@ const TableUhS = () => {
   return (
     <div className="datatable-templating-demo">
       <div className="card">
-        <DataTable scrollable scrollHeight="420px" value={info} header={header} responsiveLayout="scroll">
-          <Column sortable field="id" header="Cod."></Column>
-          <Column sortable field="service_name" header="Service"></Column>
-          <Column sortable field="description" header="Comment"></Column>
-          <Column sortable field="user_name" header="Customer"></Column>
-          <Column sortable field="method_name" header="Payment Method"></Column>
+        <DataTable value={info} header={header} responsiveLayout="scroll">
+          <Column field="id" header="Cod."></Column>
+          <Column field="service_name" header="Service"></Column>
+          <Column field="description" header="Comment"></Column>
+          <Column field="user_name" header="Customer"></Column>
+          <Column field="method_name" header="Payment Method"></Column>
+          <Column field="payments" header="Payments"></Column>
+          <Column field="period" header="Payment Period (days)"></Column>
+          <Column field="interest" header="Interest"></Column>
           <Column field="" header="Actions" body={codeEditor}></Column>
         </DataTable>
 
@@ -186,4 +189,4 @@ const TableUhS = () => {
   );
 };
 
-export default TableUhS;
+export default TableMR;

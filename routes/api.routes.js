@@ -154,5 +154,39 @@ export const getCountStatus = async (data) => {
       "x-access-token": data.accessToken,
     },
   });
+  
+  return await response.json(); 
+};
+/* Function for user has service */
+export const insertUserHasService = async (data) => {
+  const response = await fetch(`${ROUTE}/insertUserHasService`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await response.json();
+};
+
+/* Function for user has service */
+export const insertPaymentRecord = async (data) => {
+  const response = await fetch(`${ROUTE}/insertPaymentRecord`, {
+    method: "POST",
+    mode: "cors",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+    body: JSON.stringify(data),
+  });
+
   return await response.json();
 };

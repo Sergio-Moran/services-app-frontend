@@ -1,19 +1,17 @@
 import React from "react";
-import Register from "../components/Register";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import Layout from "../components/Layouts/Layout";
+import FormPayServices from "../components/FormPayServices";
 
-const LogPage = () => {
+const formPayService = () => {
   return (
-    <>
-      <Layout>
-        <Register />
-      </Layout>
-    </>
+    <Layout>
+      <FormPayServices />
+    </Layout>
   );
 };
 
-export default LogPage;
+export default formPayService;
