@@ -15,12 +15,12 @@ const Layout = ({ children }) => {
         {
           label: "New",
           icon: "pi pi-fw pi-plus",
-          url: "/service"
+          url: "/service",
         },
         {
           label: "List",
           icon: "pi pi-fw pi-bars",
-          url: "/menuService"
+          url: "/menuService",
         },
         {
           separator: true,
@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
         {
           label: "User has Service",
           icon: "pi pi-folder",
-          url: "/tableUhS"
+          url: "/tableUhS",
         },
       ],
     },
@@ -138,12 +138,28 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div>
-        <div className="card">
-          <Menubar model={items} start={start} end={end} />
-        </div>
-      </div>
-      <Card title="">{children}</Card>
+      <Card
+        title=""
+        style={{
+          marginBottom: "100px",
+          marginTop: "3%",
+          width: "100%",
+        }}
+      >
+        {children}
+      </Card>
+      <Menubar
+        style={{
+          display: "flex",
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          justifyContent: "center",
+        }}
+        model={items}
+        start={start}
+        end={end}
+      />
       <div
         className="footer"
         style={{

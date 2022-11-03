@@ -164,14 +164,14 @@ const TableUhS = () => {
     <div className="datatable-templating-demo">
       <div className="card">
         <DataTable value={info} header={header} responsiveLayout="scroll">
-          <Column field="id" header="Cod."></Column>
-          <Column field="service_name" header="Service"></Column>
-          <Column field="description" header="Comment"></Column>
-          <Column field="user_name" header="Customer"></Column>
-          <Column field="method_name" header="Payment Method"></Column>
-          <Column field="payments" header="Payments"></Column>
-          <Column field="period" header="Payment Period (days)"></Column>
-          <Column field="interest" header="Interest"></Column>
+          <Column sortable field="id" header="Cod."></Column>
+          <Column sortable field="service_name" header="Service"></Column>
+          <Column sortable field="description" header="Comment"></Column>
+          <Column sortable field="user_name" header="Customer"></Column>
+          <Column sortable field="method_name" header="Payment Method"></Column>
+          <Column sortable field="payments" header="Payments"></Column>
+          <Column sortable field="period" header="Payment Period (days)"></Column>
+          <Column sortable field="interest" header="Interest"></Column>
           <Column field="" header="Actions" body={codeEditor}></Column>
         </DataTable>
 

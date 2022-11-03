@@ -84,7 +84,7 @@ const Table = () => {
       life: 3000,
     });
   };
-  
+
   useEffect(() => {
     userGet();
   }, []);
@@ -144,15 +144,15 @@ const Table = () => {
     <>
       <div
         style={{
-          height: "auto",
+          w: "auto",
         }}
       >
         <div className="datatable-templating-demo">
           <div className="card">
             <DataTable value={info} header={header} responsiveLayout="scroll">
-              <Column field="id" header="Cod."></Column>
-              <Column field="name" header="Name"></Column>
-              <Column field="mail" header="Email"></Column>
+              <Column sortable field="id" header="Cod."></Column>
+              <Column sortable field="name" header="Name"></Column>
+              <Column sortable field="mail" header="Email"></Column>
               <Column field="" header="Actions" body={codeEditor}></Column>
             </DataTable>
 

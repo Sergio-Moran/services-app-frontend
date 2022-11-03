@@ -40,7 +40,10 @@ const TableServices = () => {
   };
 
   const serviceGet = useCallback(async () => {
-    let cookie = { accessToken: cookies.accessToken, table: "getServiceWithPrices" };
+    let cookie = {
+      accessToken: cookies.accessToken,
+      table: "getServiceWithPrices",
+    };
     const response = await getObjects(cookie);
     console.log(response);
     setInfo(response);
@@ -179,10 +182,10 @@ const TableServices = () => {
         <div className="datatable-templating-demo">
           <div className="card">
             <DataTable value={info} header={header} responsiveLayout="scroll">
-              <Column field="id" header="Cod."></Column>
-              <Column field="name" header="Service Name"></Column>
-              <Column field="price" header="Price"></Column>
-              <Column field="description" header="Description"></Column>
+              <Column sortable field="id" header="Cod."></Column>
+              <Column sortable field="name" header="Service Name"></Column>
+              <Column sortable field="price" header="Price"></Column>
+              <Column sortable field="description" header="Description"></Column>
               <Column field="" header="Actions" body={codeEditor}></Column>
             </DataTable>
 
