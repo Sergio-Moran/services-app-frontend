@@ -94,13 +94,14 @@ const Layout = ({ children }) => {
     },
   ];
 
+  let role = "";
   const query = async () => {
     let data = {
       accessToken: cookies.accessToken,
       id: cookies.userId,
     };
     const response = await getRole(data);
-
+    role = response.name;
     if (response.name == "user") {
       setItems(itemsUser);
     }
