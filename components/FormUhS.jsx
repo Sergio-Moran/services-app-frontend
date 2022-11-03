@@ -15,21 +15,26 @@ import { useFormik } from "formik";
 
 const FormUhS = (props) => {
   const [user, setUser] = useState("");
+  const [method, setMethod] = useState("");
   const [dataU, setDataU] = useState("");
   const [dataS, setDataS] = useState("");
+  const [dataM, setDataM] = useState("");
   const [dataEditU, setDataEditU] = useState("");
   const [dataEditS, setDataEditS] = useState("");
+  const [dataEditM, setDataEditM] = useState("");
   const [service, setService] = useState("");
   const [cookies, setCookie] = useCookies(["accessToken"]);
   let userElement = [];
   let serviceElement = [];
+  let methodElement = [];
 
   /* Formik */
   const formik = useFormik({
     initialValues: {
-      name: "",
+      service_id: "",
       description: "",
-      price: "",
+      user_id: "",
+      method_id: "",
     },
     onSubmit: (data) => {
       setFormData(data);
@@ -38,13 +43,15 @@ const FormUhS = (props) => {
 
   /* Insert data */
   const insertedUhS = async () => {
-    const newService = {
-      name: formik.values.name,
+    const newUhS= {
+      service_id: dataS,
       description: formik.values.description,
-      price: formik.values.price,
+      user_id: dataU,
+      method_id: dataM,
       accessToken: cookies.accessToken,
     };
-    formik.resetForm();
+    console.log(newUhS);
+    /* formik.resetForm(); */
   };
 
   /* Get users */
@@ -78,6 +85,17 @@ const FormUhS = (props) => {
     [cookies.accessToken]
   );
 
+  /* Get Methods */
+  const MethodGet = useCallback(async () => {
+    let cookie = {
+      accessToken: cookies.accessToken,
+      table: "tbMethodPayment",
+    };
+    const response = await getObjects(cookie);
+    setMethod(response);
+    /* console.log(response); */
+  }, [cookies.accessToken]);
+
   /* Get service and price */
   const getServiceEdit = useCallback(
     async (dataS) => {
@@ -95,8 +113,6 @@ const FormUhS = (props) => {
       };
       const resService = await getEntityById(dataService);
 
-      console.log(resService);
-      console.log(resPrice);
       if (resService.status && resPrice.status) {
         const response = {
           idService: resService.id,
@@ -113,6 +129,18 @@ const FormUhS = (props) => {
     [cookies.accessToken]
   );
 
+  /* Get method */
+  const getMethodEdit = useCallback(async (dataM) => {
+    let dataMethod = {
+      accessToken: cookies.accessToken,
+      table: "tbMethodPayment",
+      id: dataM,
+    };
+    const resMethod = await getEntityById(dataMethod);
+    setDataEditM(resMethod);
+    [cookies.accessToken];
+  }, []);
+
   for (let i = 0; i < user.length; i++) {
     userElement.push({ label: user[i].name, value: user[i].id });
   }
@@ -121,20 +149,26 @@ const FormUhS = (props) => {
     serviceElement.push({ label: service[i].name, value: service[i].idPrice });
   }
 
+  for (let i = 0; i < method.length; i++) {
+    methodElement.push({ label: method[i].name, value: method[i].id });
+  }
+
   const render = () => {
     getUserEdit(dataU);
     getServiceEdit(dataS);
+    getMethodEdit(dataM);
   };
 
   useEffect(() => {
     userGet();
     serviceGet();
+    MethodGet();
   }, []);
 
   return (
     <div
       style={{
-        height: "100vh",
+        height: "75vh",
       }}
     >
       <div
@@ -142,11 +176,12 @@ const FormUhS = (props) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-evenly",
-          padding: 50,
+          padding: 40,
         }}
       >
         <Card
           className="p-card"
+          title="Users"
           style={{
             width: "25rem",
           }}
@@ -160,6 +195,7 @@ const FormUhS = (props) => {
         </Card>
         <Card
           className="p-card"
+          title="Services"
           style={{
             width: "25rem",
           }}
@@ -168,6 +204,21 @@ const FormUhS = (props) => {
             value={dataS}
             options={serviceElement}
             onChange={(e) => setDataS(e.value)}
+            listStyle={{ maxHeight: "250px" }}
+          />
+        </Card>
+
+        <Card
+          className="p-card"
+          title="Methods"
+          style={{
+            width: "25rem",
+          }}
+        >
+          <ListBox
+            value={dataM}
+            options={methodElement}
+            onChange={(e) => setDataM(e.value)}
             listStyle={{ maxHeight: "250px" }}
           />
         </Card>
@@ -192,7 +243,7 @@ const FormUhS = (props) => {
           onClick={render}
         />
       </div>
-      &ensp;
+
       <form onSubmit={formik.handleSubmit} className="p-fluid">
         <h3>User Has Service</h3>
         <div className="grid p-fluid">
@@ -280,8 +331,8 @@ const FormUhS = (props) => {
               <InputText
                 id="method"
                 name="method"
-                placeholder="Method"
-                value={formik.values.method}
+                disabled
+                placeholder={dataEditM.name}
                 onChange={formik.handleChange}
               />
             </div>
@@ -296,8 +347,8 @@ const FormUhS = (props) => {
               <InputText
                 id="description"
                 name="description"
-                disabled
-                placeholder={dataEditS.descriptionService}
+                placeholder="Description"
+                value={formik.values.description}
                 onChange={formik.handleChange}
               />
             </div>
