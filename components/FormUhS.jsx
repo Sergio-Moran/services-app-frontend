@@ -169,11 +169,7 @@ const FormUhS = (props) => {
   }, []);
 
   return (
-    <div
-      style={{
-        height: "75vh",
-      }}
-    >
+    <div>
       <div
         style={{
           display: "flex",
