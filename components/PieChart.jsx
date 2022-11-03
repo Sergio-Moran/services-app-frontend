@@ -1,22 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Chart } from "primereact/chart";
 import { Card } from "primereact/card";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
+import { getCountStatus } from "../routes/api.routes";
+import { useCookies } from "react-cookie";
 
 const PieChart = () => {
   const [visibleFullScreen, setVisibleFullScreen] = useState(false);
-  const [chartData] = useState({
-    labels: ["True", "False"],
+  const [cookies] = useCookies(["accessToken"]);
+  const [chartData, setCharData] = useState({
+    labels: ["Active", "Inactive"],
     datasets: [
       {
-        data: [300, 50],
+        data: [0, 0],
         backgroundColor: ["#42A5F5", "#66BB6A", "#FFA726"],
         hoverBackgroundColor: ["#64B5F6", "#81C784", "#FFB74D"],
       },
     ],
   });
 
+  const querys = async () => {
+    let data = { accessToken: cookies.accessToken, table: "tbService" };
+    const response = await getCountStatus(data);
+    let charData = {
+      labels: ["Active", "Inactive"],
+      datasets: [
+        {
+          data: [response.true, response.false],
+          backgroundColor: ["#42A5F5", "#66BB6A", "#FFA726"],
+          hoverBackgroundColor: ["#64B5F6", "#81C784", "#FFB74D"],
+        },
+      ],
+    };
+    setCharData(charData);
+  };
+
+  useEffect(() => {
+    querys();
+  }, []);
   const [lightOptions] = useState({
     plugins: {
       legend: {
@@ -39,12 +61,12 @@ const PieChart = () => {
 
   const header = (
     <div className="flex justify-content-center">
-      <h1>Hola Mundo</h1>
+      <h1>Estado de los Servicios</h1>
     </div>
   );
   const headerMin = (
     <div className="flex justify-content-center">
-      <h5>Hola Mundo</h5>
+      <h5>Estado de los Servicios</h5>
     </div>
   );
 

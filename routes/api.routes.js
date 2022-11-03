@@ -143,3 +143,16 @@ export const updateEntity = async (body, data) => {
   });
   return await response.json();
 };
+
+export const getCountStatus = async (data) => {
+  const response = await fetch(`${ROUTE}/getCountStatus/${data.table}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-access-token": data.accessToken,
+    },
+  });
+  return await response.json();
+};
