@@ -100,11 +100,11 @@ const TableUhS = () => {
   const buttonEdit = (props) => {
     return (
       <div>
-        <Button
+        {/* <Button
           className="p-button-info"
           icon="pi pi-pencil"
           onClick={() => getUhS(props)}
-        />
+        /> */}
         &ensp;
         <Button
           className="p-button-danger"
@@ -125,7 +125,7 @@ const TableUhS = () => {
 
   const header = (
     <div className="table-header">
-      Users
+      User has Services
       <div
         style={{
           display: "flex",
@@ -146,7 +146,7 @@ const TableUhS = () => {
         <DataTable value={info} header={header} responsiveLayout="scroll">
           <Column field="id" header="Cod."></Column>
           <Column field="name" header="Name"></Column>
-          <Column field="mail" header="Email"></Column>
+          <Column field="mail" header="Service"></Column>
           <Column field="" header="Actions" body={codeEditor}></Column>
         </DataTable>
 
