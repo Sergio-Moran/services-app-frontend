@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Chart } from "primereact/chart";
+import { Card } from "primereact/card";
 
 const DoughnutChart = () => {
   const [chartData] = useState({
@@ -25,16 +26,11 @@ const DoughnutChart = () => {
 
   return (
     <>
-      <div>
+      <Card>
         <div className="card flex justify-content-center">
-          <Chart
-            type="doughnut"
-            data={chartData}
-            options={lightOptions}
-            style={{ position: "relative", width: "40%" }}
-          />
+          <Chart type="doughnut" data={chartData} options={lightOptions} />
         </div>
-      </div>
+      </Card>
     </>
   );
 };

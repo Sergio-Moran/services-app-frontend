@@ -6,13 +6,37 @@ import "primeflex/primeflex.css";
 import Layout from "../components/Layouts/Layout";
 import TableServices from "../components/TableServices";
 import DoughnutChart from "../components/DChart.jsx";
+import StackedChart from "../components/StackedChart";
+import PolarChart from "../components/PolarChart";
+import PieChart from "../components/PieChart";
 
-const menuService = () => {
+const dashboard = () => {
   return (
     <Layout>
-      <DoughnutChart />
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
+        <div style={{ flexGrow: 2 }}>
+          <DoughnutChart  />
+        </div>
+        <div style={{ flexGrow: 2 }}>
+          <PieChart />
+        </div>
+        <div style={{ flexGrow: 2 }}>
+          <DoughnutChart />
+        </div>
+        <div style={{ flexGrow: 2 }}>
+          <PieChart />
+        </div>
+        <div style={{ flexGrow: 2 }}>
+          <StackedChart />
+        </div>
+      </div>
     </Layout>
   );
 };
 
-export default menuService;
+export default dashboard;

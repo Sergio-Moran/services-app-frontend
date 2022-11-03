@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 import React, { useEffect, useRef } from "react";
 import { Messages } from "primereact/messages";
 import { Message } from "primereact/message";
+import Link from "next/link";
 
 const Layout = ({ children }) => {
   const items = [
@@ -112,7 +113,18 @@ const Layout = ({ children }) => {
     }, */
   ];
 
-  const start = <i className="pi pi-database" style={{ fontSize: "2em" }}></i>;
+  const dash = () => {
+    <Link></Link>;
+  };
+
+  const start = (
+    <Link href="/dashboard">
+      <i
+        className="pi pi-database"
+        style={{ fontSize: "2em", marginRight: "10px" }}
+      ></i>
+    </Link>
+  );
   const end = (
     <Button
       icon="pi pi-times"

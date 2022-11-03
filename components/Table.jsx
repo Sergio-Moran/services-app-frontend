@@ -149,7 +149,13 @@ const Table = () => {
       >
         <div className="datatable-templating-demo">
           <div className="card">
-            <DataTable value={info} header={header} responsiveLayout="scroll">
+            <DataTable
+              scrollable
+              scrollHeight="420px"
+              value={info}
+              header={header}
+              responsiveLayout="scroll"
+            >
               <Column sortable field="id" header="Cod."></Column>
               <Column sortable field="name" header="Name"></Column>
               <Column sortable field="mail" header="Email"></Column>
