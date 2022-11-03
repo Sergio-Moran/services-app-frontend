@@ -6,7 +6,7 @@ import { Button } from "primereact/button";
 import { getObjects } from "../routes/api.routes";
 import { useCookies } from "react-cookie";
 
-const DoughnutChart = () => {
+const DoughnutChartService = () => {
   const [visibleFullScreen, setVisibleFullScreen] = useState(false);
   const [cookies] = useCookies(["accessToken"]);
   const [chartData, setCharData] = useState({
@@ -14,7 +14,13 @@ const DoughnutChart = () => {
     datasets: [
       {
         data: [300, 50, 100],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        backgroundColor: [
+          "#42A5F5",
+          "#66BB6A",
+          "#FFA726",
+          "#26C6DA",
+          "#7E57C2",
+        ],
         hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
       },
     ],
@@ -22,7 +28,7 @@ const DoughnutChart = () => {
   const query = async () => {
     let data = {
       accessToken: cookies.accessToken,
-      table: "reportAmountUserService",
+      table: "reportAmountServiceUser",
     };
     const response = await getObjects(data);
     console.log(response.map);
@@ -74,12 +80,12 @@ const DoughnutChart = () => {
 
   const header = (
     <div className="flex justify-content-center">
-      <h1>Cantidad de Servicios por Usuario</h1>
+      <h1>Cantidad de Usuarios por Servicios</h1>
     </div>
   );
   const headerMin = (
     <div className="flex justify-content-center">
-      <h5>Cantidad de Servicios por Usuario</h5>
+      <h5>Cantidad de Usuarios por Servicios</h5>
     </div>
   );
   return (
@@ -95,7 +101,7 @@ const DoughnutChart = () => {
             style={{ justifyContent: "center" }}
           >
             <Chart
-              type="doughnut"
+              type="polarArea"
               data={chartData}
               options={lightOptions}
               style={{ width: "35%", justifyContent: "center" }}
@@ -105,11 +111,11 @@ const DoughnutChart = () => {
       </Sidebar>
       <Card header={headerMin} footer={footer}>
         <div className="card flex justify-content-center">
-          <Chart type="doughnut" data={chartData} options={lightOptions} />
+          <Chart type="polarArea" data={chartData} options={lightOptions} />
         </div>
       </Card>
     </>
   );
 };
 
-export default DoughnutChart;
+export default DoughnutChartService;

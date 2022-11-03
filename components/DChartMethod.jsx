@@ -6,7 +6,7 @@ import { Button } from "primereact/button";
 import { getObjects } from "../routes/api.routes";
 import { useCookies } from "react-cookie";
 
-const DoughnutChart = () => {
+const DoughnutChartMethod = () => {
   const [visibleFullScreen, setVisibleFullScreen] = useState(false);
   const [cookies] = useCookies(["accessToken"]);
   const [chartData, setCharData] = useState({
@@ -22,7 +22,7 @@ const DoughnutChart = () => {
   const query = async () => {
     let data = {
       accessToken: cookies.accessToken,
-      table: "reportAmountUserService",
+      table: "reportAmountMethodService",
     };
     const response = await getObjects(data);
     console.log(response.map);
@@ -37,13 +37,8 @@ const DoughnutChart = () => {
       datasets: [
         {
           data: dataset,
-          backgroundColor: [
-            "#42A5F5",
-            "#66BB6A",
-            "#FFA726",
-            "#26C6DA",
-            "#7E57C2",
-          ],
+          backgroundColor: ["#42A5F5", "#66BB6A", "#FFA726"],
+          hoverBackgroundColor: ["#64B5F6", "#81C784", "#FFB74D"],
         },
       ],
     };
@@ -74,12 +69,12 @@ const DoughnutChart = () => {
 
   const header = (
     <div className="flex justify-content-center">
-      <h1>Cantidad de Servicios por Usuario</h1>
+      <h1>Cantidad de Servicios por Metodo de Pago</h1>
     </div>
   );
   const headerMin = (
     <div className="flex justify-content-center">
-      <h5>Cantidad de Servicios por Usuario</h5>
+      <h5>Cantidad de Usuarios por Metodo de Pago</h5>
     </div>
   );
   return (
@@ -95,7 +90,7 @@ const DoughnutChart = () => {
             style={{ justifyContent: "center" }}
           >
             <Chart
-              type="doughnut"
+              type="pie"
               data={chartData}
               options={lightOptions}
               style={{ width: "35%", justifyContent: "center" }}
@@ -105,11 +100,11 @@ const DoughnutChart = () => {
       </Sidebar>
       <Card header={headerMin} footer={footer}>
         <div className="card flex justify-content-center">
-          <Chart type="doughnut" data={chartData} options={lightOptions} />
+          <Chart type="pie" data={chartData} options={lightOptions} />
         </div>
       </Card>
     </>
   );
 };
 
-export default DoughnutChart;
+export default DoughnutChartMethod;

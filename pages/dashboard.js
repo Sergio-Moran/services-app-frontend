@@ -11,6 +11,8 @@ import PolarChart from "../components/PolarChart";
 import PieChart from "../components/PieChart";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
+import DoughnutChartService from "../components/DChartService";
+import DoughnutChartMethod from "../components/DChartMethod";
 
 const dashboard = () => {
   return (
@@ -27,10 +29,22 @@ const dashboard = () => {
         <div style={{ flexGrow: 2 }}>
           <DoughnutChart />
         </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
         <div style={{ flexGrow: 2 }}>
-          <DoughnutChart />
+          <DoughnutChartService />
+        </div>
+        <div style={{ flexGrow: 2 }}>
+          <DoughnutChartMethod />
         </div>
       </div>
+
       <div style={{ flexGrow: 2 }}>
         <DoughnutChart />
       </div>
