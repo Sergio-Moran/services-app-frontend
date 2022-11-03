@@ -44,6 +44,7 @@ const FormUhS = (props) => {
       price: formik.values.price,
       accessToken: cookies.accessToken,
     };
+    formik.resetForm();
   };
 
   /* Get users */
@@ -178,12 +179,12 @@ const FormUhS = (props) => {
           justifyContent: "center",
         }}
       >
-        <Button
+        {/* <Button
           icon="pi pi-times"
           className="p-button-rounded p-button-danger"
           aria-label="Cancel"
-        />
-        &ensp;
+          onClick={desRender}
+        /> */}
         <Button
           icon="pi pi-check"
           className="p-button-rounded"
@@ -193,7 +194,7 @@ const FormUhS = (props) => {
       </div>
       &ensp;
       <form onSubmit={formik.handleSubmit} className="p-fluid">
-        <h5>User Has Service</h5>
+        <h3>User Has Service</h3>
         <div className="grid p-fluid">
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
@@ -205,7 +206,6 @@ const FormUhS = (props) => {
                 name="name"
                 disabled
                 placeholder={dataEditU.name}
-                value={formik.values.name}
                 onChange={formik.handleChange}
               />
             </div>
@@ -217,7 +217,6 @@ const FormUhS = (props) => {
                 <i className="pi pi-google" />
               </span>
               <InputText
-                type="number"
                 id="mail"
                 name="mail"
                 disabled
@@ -235,6 +234,7 @@ const FormUhS = (props) => {
               <InputText
                 id="status"
                 name="status"
+                disabled
                 placeholder={dataEditU.status == true ? "ACTIVE" : "INACTIVE"}
                 onChange={formik.handleChange}
               />
@@ -245,14 +245,13 @@ const FormUhS = (props) => {
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
-                <i className="pi pi-user"></i>
+                <i className="pi pi-box"></i>
               </span>
               <InputText
-                id="name"
-                name="name"
+                id="nameS"
+                name="nameS"
                 disabled
-                placeholder={dataEditU.name}
-                value={formik.values.name}
+                placeholder={dataEditS.nameService}
                 onChange={formik.handleChange}
               />
             </div>
@@ -261,14 +260,13 @@ const FormUhS = (props) => {
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
-                <i className="pi pi-google" />
+                <i className="pi pi-dollar" />
               </span>
               <InputText
-                type="number"
-                id="mail"
-                name="mail"
+                id="price"
+                name="price"
                 disabled
-                placeholder={dataEditU.mail}
+                placeholder={dataEditS.price}
                 onChange={formik.handleChange}
               />
             </div>
@@ -277,12 +275,29 @@ const FormUhS = (props) => {
           <div className="col-12 md:col-4">
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
-                <i className="pi pi-pencil" />
+                <i className="pi pi-calculator" />
               </span>
               <InputText
-                id="status"
-                name="status"
-                placeholder={dataEditU.status == true ? "ACTIVE" : "INACTIVE"}
+                id="method"
+                name="method"
+                placeholder="Method"
+                value={formik.values.method}
+                onChange={formik.handleChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="grid p-fluid">
+          <div className="col-12 md:col-12">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-book" />
+              </span>
+              <InputText
+                id="description"
+                name="description"
+                disabled
+                placeholder={dataEditS.descriptionService}
                 onChange={formik.handleChange}
               />
             </div>
