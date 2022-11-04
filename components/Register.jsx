@@ -66,7 +66,7 @@ const Register = () => {
     let returnUrl = "";
     console.log(result);
     if (result.status) {
-      returnUrl = "/menu";
+      returnUrl = "/table";
     } else {
       formik.resetForm();
       returnUrl = "/register";
