@@ -65,7 +65,7 @@ const FormPayServices = () => {
   );
 
   for (let i = 0; i < uHs.length; i++) {
-    uHsElement.push({ label: uHs[i].description, value: uHs[i].id });
+    uHsElement.push({ label: uHs[i].description, value: uHs[i].user_id });
   }
 
   const render = () => {
